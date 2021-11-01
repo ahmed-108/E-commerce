@@ -62,7 +62,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/apps/chat.html" class="nav-link">
+                    <a href="{{route('ManageProducts')}}" class="nav-link">
                         <i class="link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">Manage The Products</span>
                     </a>

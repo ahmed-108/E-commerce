@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
+
+Route::get('/admin/login',function (){
+    return view('AdminPanel.login');
+})->middleware('guest')->name('login');
+Route::post('/admin/login','Auth\LoginController@login');
+Route::get('admin/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
+#######################################################################
 Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web']],function(){
     #######################################  The Routes of Views #######################################################
     Route::get("/Dashboard","AdminController@dashboard")->name('dashboard');
@@ -32,4 +40,12 @@ Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web'
 
     Route::get('/SubCategory/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
     Route::get('/SubCategory/delete/{id}','AdminController@DeleteSubCategory')->name('delete.subcategory');
+    #######################################  The Routes of Views #######################################################
+    Route::get("/ManageProducts","AdminController@ManageProducts")->name('ManageProducts');
+    Route::post("/ManageProducts/add","AdminController@Add_Product")->name('add.products');
+    Route::get('/ManageProducts/delete/{id}','AdminController@DeleteProduct')->name('delete.product');
+
+    Route::post('/ManageProducts/Edit/{id}','AdminController@UpdateSubCategory')->name('update.subcategory');
+    Route::get('/ManageProducts/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
+
 });

@@ -46,7 +46,7 @@
                 <li class="nav-item nav-category">Manage The Products</li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-                        <i class="link-icon" data-feather="floder"></i>
+                        <i class="link-icon" data-feather="folder"></i>
                         <span class="link-title">The Categories</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
@@ -56,13 +56,13 @@
                                 <a href="{{route('MainCategory')}}" class="nav-link">The Main Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/email/read.html" class="nav-link">The Sub-Categories</a>
+                                <a href="{{route('SubCategory')}}" class="nav-link">The Sub-Categories</a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/apps/chat.html" class="nav-link">
+                    <a href="{{route('ManageProducts')}}" class="nav-link">
                         <i class="link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">Manage The Products</span>
                     </a>
