@@ -41,7 +41,6 @@ class AdminController extends BaseController
        ]);
        return redirect()->back()->with(['success'=>'The Category has been added successfully']);
     }
-
     public function GetCategoryById($category){
         $categories= categories::find($category);
     }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Models\user_login;
+
 return [
 
     /*
@@ -40,6 +42,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'user',
+        ],
 
         'api' => [
             'driver' => 'token',
@@ -69,6 +75,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'user' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\user_login::class,
         ],
 
         // 'users' => [

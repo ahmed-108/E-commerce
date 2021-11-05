@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/', function () {
-    return view('Website.Index');
-});
+//Route::group(['namespace'=>'Website','middleware' => ['auth.']],function() {
+//    #######################################  The Routes of Views #######################################################
+//
+//});
+Route::get('/userLogin','Website\AuthLogin@viewlogin');
+Route::get('/user','Website\Authlogin@afterlogin')->middleware('user','auth:user')->name('afterlogin');
+Route::post('/userLogin/login','Website\AuthLogin@validlogin')->name('save.login.user');
+Route::get('/logout','Website\AuthLogin@logout');
+
 
 
 
