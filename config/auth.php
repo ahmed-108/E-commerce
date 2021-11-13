@@ -46,11 +46,15 @@ return [
             'driver' => 'session',
             'provider' => 'user',
         ],
-
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'users',
             'hash' => false,
+        ],
+
+        'user_api' => [
+            'driver' => 'jwt',
+            'provider' => 'user_login',
         ],
     ],
 
@@ -80,7 +84,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Http\Models\user_login::class,
         ],
-
+        'user_login' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\user_login::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

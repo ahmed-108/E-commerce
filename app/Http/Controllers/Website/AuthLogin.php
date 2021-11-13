@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
-use App\Http\Models\users;
+use App\Traits\General_Traits;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthLogin extends BaseController
 {
-
+use General_Traits;
 
     public function viewLogin(){
         return view('Website.login');
@@ -43,4 +43,5 @@ class AuthLogin extends BaseController
         auth()->guard('user')->logout();
         return redirect()->intended('/userLogin');
     }
+
 }
