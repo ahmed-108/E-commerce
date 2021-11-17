@@ -24,7 +24,11 @@ Route::group(['namespace'=>'Website','middleware' => ['CheckAPIPassword']],funct
     Route::post("GetProduct","API@GetProductById")->name("get_subcategoryByID");
     Route::post("GetProductBySubCategory","API@GetProductBySubcategory")->name("get_subcategoryByID");
     Route::post("GetProductByCategory","API@GetProductByCategory")->name("get_subcategoryByID");
-
+    Route::post("GetPopularProducts","API@GetPopularProducts")->name("get_subcategoryByID");
+    Route::post("GetOldestProduct","API@GetOldestProduct")->name("get_subcategoryByID");
+    Route::post("GetLowestPrices","API@GetLowestPrices")->name("get_subcategoryByID");
+    Route::post("GetHighestPrices","API@GetHighestPrices")->name("get_subcategoryByID");
+    Route::post("GetResultSearch","API@GetResultSearch")->name("get_subcategoryByID");
 
 });
 

@@ -19,5 +19,7 @@ class products extends Model
     public function category(){
         return $this->hasOne('App\Http\Models\categories');
     }
-
+    public function comments(){
+        return $this->hasMany('App\Http\Models\Comments');
+    }
 }

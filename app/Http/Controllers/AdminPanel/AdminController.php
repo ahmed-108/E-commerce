@@ -126,10 +126,10 @@ class AdminController extends BaseController
                     $img_name = time() . '.' . $file_extension;
                     $path = 'public/images/Products';
                     $request->product_images->move($path, $img_name);
-                    $file = $path . '/' . $img_name;
+                    $file ='/'.$path . '/' . $img_name;
                     images::create([
                         'product_id' => products::all()->max('id'),
-                        'path' => $img_name
+                        'path' => $file
                     ]);
         }
             $update_createdproduct=products::find(products::all()->max('id'));
@@ -152,6 +152,7 @@ class AdminController extends BaseController
         products::destroy($id);
         return redirect()->back()->with(['success'=>'The product has been deleted successfully']);
     }
+
 
 
 

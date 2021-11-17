@@ -38,6 +38,15 @@ trait General_Traits
             $key => $value
         ]);
     }
+    public function returnDataArray( $key,array $value, $msg = "")
+    {
+        return response()->json([
+            'status' => true,
+            'errNum' => "S000",
+            'msg' => $msg,
+            $key => $value
+        ]);
+    }
 
 
     //////////////////

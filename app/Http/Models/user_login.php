@@ -26,6 +26,8 @@ class user_login  extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
+    public function comments(){
+        return $this->hasMany('App\Http\Models\Comments');
+    }
 
 }

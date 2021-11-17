@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Models\categories;
+use App\Http\Models\Comments;
 use App\Http\Models\products;
 use App\Http\Models\sub_categories;
 use App\Traits\General_Traits;
@@ -20,7 +21,7 @@ class API extends BaseController
 {
 use General_Traits;
 
-   public function GetCategory(){
+    public function GetCategory(){
     $allcategory=categories::all();
     return $this->returnData("All_Categories", $allcategory);
    }
@@ -67,11 +68,21 @@ use General_Traits;
         where('products.id',$request->id)->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.short_description','products.long_description',
             'products.price','product_images.path']);
-
+        $comments= Comments::join('user_login','user_login.id','=','comments.user_id')->
+        where('comments.product_id',$request->id)->get(['comments.id','user_login.username','comments.comment','comments.rating']);
+        $data=[
+            "The comments"=>$comments
+        ];
         if(!$alldata){
             return  $this->returnError('4004', 'This product not exists');
         }else{
-            return $this->returnData('The Product', $alldata,'success');
+            return response()->json([
+                'status' => true,
+                'errNum' => "S000",
+                'msg' => "success",
+                'The Product'=>$alldata,
+                "the comments"=>$comments
+            ]);
         }
     }
 
@@ -110,4 +121,59 @@ use General_Traits;
             }
         }
     }
+
+    public function GetPopularProducts(){
+        $NewestProducts= Comments::
+        join('products','products.id','=','comments.product_id')->
+        join('categories','categories.id','=','products.category_id')->
+        join('sub-category','sub-category.id','=','products.sub_category_id')->
+        join('product_images','product_images.id','=','products.product_imagesID')->
+        where('comments.rating','>=',2)->
+        get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
+            'products.short_description','product_images.path','comments.rating']);
+
+        return $this->returnData("done", $NewestProducts);
+    }
+
+    public function GetOldestProduct(){
+        $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+        join('sub-category','sub-category.id','=','products.sub_category_id')->
+        join('product_images','product_images.id','=','products.product_imagesID')->
+        orderBy('products.created_at','asc')->take(8)->
+        get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
+            'products.short_description','product_images.path']);
+        return $this->returnData("Oldest Products", $NewestProducts);
+    }
+    public function GetHighestPrices(){
+
+        $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+        join('sub-category','sub-category.id','=','products.sub_category_id')->
+        join('product_images','product_images.id','=','products.product_imagesID')->
+        orderBy('products.price','desc')->take(8)->
+        get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
+            'products.short_description','product_images.path']);
+        return $this->returnData("Highest Prices", $NewestProducts);
+    }
+
+    public function GetLowestPrices(){
+        $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+        join('sub-category','sub-category.id','=','products.sub_category_id')->
+        join('product_images','product_images.id','=','products.product_imagesID')->
+        orderBy('products.price','asc')->take(8)->
+        get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
+            'products.short_description','product_images.path']);
+        return $this->returnData("Lowest Prices", $NewestProducts);
+    }
+
+    public function GetResultSearch(Request $request){
+        $ResultSearch= products::join('categories','categories.id','=','products.category_id')->
+        join('sub-category','sub-category.id','=','products.sub_category_id')->
+        join('product_images','product_images.id','=','products.product_imagesID')->
+        where('products.title','LIKE','%'.$request->search.'%')->
+        get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
+            'products.short_description','product_images.path']);
+
+        return $this->returnData("Search Result", $ResultSearch);
+    }
+
 }

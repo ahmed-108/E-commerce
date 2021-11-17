@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Models\Comments;
 use App\Http\Models\user_login;
 use App\Traits\General_Traits;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -82,5 +83,35 @@ use General_Traits;
 
         return $this->returnData('User',$user,'Register done');
     }
+    public function postcomments(Request $request){
+        try {
+            $token=$request->header('auth-token');
+            if($token){
+                $rules=[
+                    'comment'=> 'required',
+                    "user_id"=>"required",
+                    "product_id"=>"required"
+                ];
+                $validator= Validator::make($request->all(),$rules);
+                if($validator->fails()){
+                    return $this->returnError("4003", "Please ensure enter the data");
+                }
+                Comments::create([
+                    'comment'=>$request-> comment,
+                    'rating'=>$request->rating,
+                    'user_id'=>$request-> user_id,
+                    'product_id'=>$request->product_id
+                ]);
+                return $this->returnSuccessMessage("The comment has been added");
+
+            }else{
+                return $this->returnError('E500', 'Please Enter Token');
+            }
+        }catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+    }
+
 
 }
