@@ -27,3 +27,11 @@ Route::group(['namespace'=>'Website','middleware' => ['CheckAPIPassword']],funct
 
 
 });
+
+Route::group(['namespace'=>'Website','middleware'=>['CheckAPIPassword','auth.guard:user_api']], function (){
+    Route::post('/user_login','AuthLogin@Login');
+    Route::post('/logout','AuthLogin@Logout');
+    Route::post('/register_user','AuthLogin@register');
+    Route::post('/postcomment','AuthLogin@postcomments');
+
+});

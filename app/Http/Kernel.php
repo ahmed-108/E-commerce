@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'user' => \App\Http\Middleware\checkuser::class,
         'CheckUserToken' => \App\Http\Middleware\CheckUserToken::class,
         'CheckAPIPassword' => \App\Http\Middleware\CheckPasswordAPI::class,
+        'auth.guard' => \App\Http\Middleware\Assignguard::class,
 
 
 

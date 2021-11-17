@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Models\user_login;
 use App\Traits\General_Traits;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -12,36 +13,74 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthLogin extends BaseController
 {
 use General_Traits;
 
-    public function viewLogin(){
-        return view('Website.login');
-    }
-    public function afterlogin(){
-        return "you are login";
-    }
-    public function validlogin(Request $request){
-        $rules=[
-            'email'=>'required',
-            'password'=> 'required'
-        ];
-        $validator= Validator::make($request->all(),$rules);
-        if($validator->fails()){
-            return "error";
-        }
-        if(auth()->guard('user')->attempt($request->except('_token'))){
-            return redirect()->intended('/user');
-        }else{
-            return  back()->withInput($request->only('email'));
-        }
-    }
+    public function Login(Request $request){
+        ## validation ##
+        try {
 
-    public function logout(Request $request) {
-        auth()->guard('user')->logout();
-        return redirect()->intended('/userLogin');
+            $rules=[
+                'email'=>   "required| exists:user_login,email",
+                'password'=>    "required"
+            ];
+            $validator = Validator::make($request->all(),$rules);
+            if ($validator->fails()){
+                $code = $this->returnCodeAccordingToInput($validator);
+                return $this->returnValidationError($code, $validator);
+            }
+            /// login
+            $credentials=$request->only(['email','password']);
+            $token = auth('user_api')->attempt($credentials);
+            if(!$token){
+                return $this->returnError('E1001','error in the password');
+            }else{
+                //return
+                $admin= Auth::guard('user_api')->user();
+                $admin->Token=$token;
+                return $this->returnData( 'User',$admin,'login success');
+            }
+        }catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+    }
+    public function logout(Request $request){
+
+        try {
+            $token=$request->header('auth-token');
+            if($token){
+                JWTAuth::setToken($token)->invalidate();
+                return $this->returnSuccessMessage('Logout successfully');
+            }else{
+                return $this->returnError('E500', 'Token invalid');
+            }
+        }catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+    }
+    public function register(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'username'=>"required",
+            'email'=>   "required| unique:user_login,email",
+            'password'=>    "required"
+        ]);
+
+        if ($validator->fails()){
+            $code = $this->returnCodeAccordingToInput($validator);
+            return $this->returnValidationError($code, $validator);
+        }
+
+        $user = user_login::create(array_merge(
+            $validator->validated(),
+            ['password' => bcrypt($request->password)]
+        ));
+
+        return $this->returnData('User',$user,'Register done');
     }
 
 }
