@@ -435,6 +435,10 @@
                                                         <input type="text" class="form-control" name="product_price" id="recipient-name">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="recipient-name" class="col-form-label">the discount:</label>
+                                                        <input type="text" class="form-control percent" name="product_discount" id="percent">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label>The Main Category</label>
                                                         <select name="main_category" class="js-example-basic-single w-100">
                                                             @foreach($All_Categories as $category)
@@ -526,6 +530,10 @@
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Product Price:</label>
                                                                     <input type="text" class="form-control" name="product_price" value="{{$product->price}}" id="recipient-name">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">the discount:</label>
+                                                                    <input type="text" class="form-control percent" name="product_discount" id="percent">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label>The Main Category</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Models\Cart;
 use App\Http\Models\Comments;
 use App\Http\Models\user_login;
 use App\Traits\General_Traits;
@@ -113,5 +114,40 @@ use General_Traits;
 
     }
 
+    public function AddItemToCard(Request $request){
+        try {
+            $token=$request->header('auth-token');
+            if($token){
+                $rules=[
+                    'product_id'=> 'required ',
+                    "user_id"=>"required",
+
+                ];
+                $validator= Validator::make($request->all(),$rules);
+                if($validator->fails()){
+                    return $this->returnError("4003", "Please ensure enter the data");
+                }
+
+                Cart::create([
+                    'product_id'=>$request-> product_id,
+                    'user_id'=>$request->user_id
+                ]);
+                return $this->returnSuccessMessage("The product has been added in the cart");
+
+            }else{
+                return $this->returnError('E500', 'Please Enter Token');
+            }
+        }catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+
+    }
+
+    public function GetCart(){
+        $data= Cart::join('products','products.id','=','cart.product_id')->
+        join('user_login','user_login.id','=','cart.user_id')->get();
+        return $this->returnData("the cart", $data);
+
+    }
 
 }

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['namespace'=>'Website','middleware' => ['CheckAPIPassword']],function(){
+Route::group(['namespace'=>'Website'],function(){
 
     Route::post("GetCategories","API@GetCategory")->name("get_category");
     Route::post("GetCategoryByID","API@GetCategoryById")->name("get_categoryByID");
@@ -29,13 +29,17 @@ Route::group(['namespace'=>'Website','middleware' => ['CheckAPIPassword']],funct
     Route::post("GetLowestPrices","API@GetLowestPrices")->name("get_subcategoryByID");
     Route::post("GetHighestPrices","API@GetHighestPrices")->name("get_subcategoryByID");
     Route::post("GetResultSearch","API@GetResultSearch")->name("get_subcategoryByID");
+    Route::post("getmoetcatgeory","API@getmoetcatgeory")->name("getmoetcatgeory");
 
 });
 
-Route::group(['namespace'=>'Website','middleware'=>['CheckAPIPassword','auth.guard:user_api']], function (){
+Route::group(['namespace'=>'Website','middleware'=>['auth.guard:user_api']], function (){
     Route::post('/user_login','AuthLogin@Login');
     Route::post('/logout','AuthLogin@Logout');
     Route::post('/register_user','AuthLogin@register');
     Route::post('/postcomment','AuthLogin@postcomments');
+    Route::post('/AddItemToCard','AuthLogin@AddItemToCard');
+    Route::post('/GetCart','AuthLogin@GetCart');
+
 
 });

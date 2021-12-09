@@ -19,11 +19,13 @@ Auth::routes();
 //    #######################################  The Routes of Views #######################################################
 //
 //});
-Route::get('/userLogin','Website\AuthLogin@viewlogin');
-Route::get('/user','Website\Authlogin@afterlogin')->middleware('user','auth:user')->name('afterlogin');
-Route::post('/userLogin/login','Website\AuthLogin@validlogin')->name('save.login.user');
-Route::get('/logout','Website\AuthLogin@logout');
-
+Route::get('/userLogin','Website\Website@viewlogin')->name('user.login');
+Route::get('/RegisterUser','Website\Website@viewregister')->name('user.signup');
+//Route::get('/user','Website\Website@afterlogin')->middleware('user','auth:user')->name('afterlogin');
+Route::post('/userLogin/login','Website\Website@customLogin')->name('save.login.user');
+Route::post('/RegisterUser/Register','Website\Website@customRegistration')->name('save.register.user');
+Route::get('/logout','Website\Website@logout')->name('logout');
+Route::get('/','Website\Website@Index');
 
 
 

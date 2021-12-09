@@ -176,4 +176,10 @@ use General_Traits;
         return $this->returnData("Search Result", $ResultSearch);
     }
 
+    public function getmoetcatgeory(){
+        $PopularCategories= products::join('categories','categories.id','=','products.category_id')->
+        select(['products.category_id','categories.category','categories.category_image'])->distinct()->get();
+        return $this->returnData('done', $PopularCategories);
+    }
+
 }

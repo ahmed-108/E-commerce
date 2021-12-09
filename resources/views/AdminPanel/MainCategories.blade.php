@@ -390,12 +390,28 @@
         <!-- partial -->
         <div class="page-content">
             <div class="row">
-                @if (session()->has('success'))
-                    <div class="alert alert-success" style="width: 100% !important;text-align: center;" role="alert">{{session()->get('success') }}</div>
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
-                    @if (session()->has('error'))
-                        <div class="alert alert-danger" style="width: 100% !important;text-align: center;" role="alert">{{session()->get('error') }}</div>
-                    @endif
+                @if (Session::get('success'))
+                    <div class="alert alert-success alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $success }}</strong>
+                    </div>
+                @endif
+                @if (session()->has('error'))
+                    <div class="alert alert-danger alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ Session::get('error') }}</strong>
+                    </div>
+                @endif
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -415,11 +431,15 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="post" action="{{route('add.maincategory')}}">
+                                                <form method="post" action="{{route('add.maincategory')}}" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="col-form-label">Category Name:</label>
                                                         <input type="text" class="form-control" name="main_category" id="recipient-name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="col-form-label">Category Image:</label>
+                                                        <input type="file" class="form-control" name="category_image" id="recipient-name">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -466,11 +486,15 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form method="post" action="{{route('update.maincategory',$Categories->id)}}">
+                                                            <form method="post" action="{{route('update.maincategory',$Categories->id)}}" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Category Name:</label>
                                                                     <input type="text" name="main_category" class="form-control" id="recipient-name" value="{{$Categories->category}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Category image:</label>
+                                                                    <input type="file" name="category_image" class="form-control" id="recipient-name">
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
