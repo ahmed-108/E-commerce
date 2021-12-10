@@ -26,6 +26,7 @@ Route::post('/userLogin/login','Website\Website@customLogin')->name('save.login.
 Route::post('/RegisterUser/Register','Website\Website@customRegistration')->name('save.register.user');
 Route::get('/logout','Website\Website@logout')->name('logout');
 Route::get('/','Website\Website@Index');
+Route::get('/Shop','Website\Website@Shop_View');
 
 
 

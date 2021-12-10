@@ -129,9 +129,9 @@ use General_Traits;
         join('sub-category','sub-category.id','=','products.sub_category_id')->
         join('product_images','product_images.id','=','products.product_imagesID')->
         where('comments.rating','>=',2)->
+        groupBy('comments.product_id')->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
             'products.short_description','product_images.path','comments.rating']);
-
         return $this->returnData("done", $NewestProducts);
     }
 
@@ -177,6 +177,8 @@ use General_Traits;
     }
 
     public function getmoetcatgeory(){
+        $PopularCategories= products::join('categories','categories.id','=','products.category_id')->
+        select(['products.category_id','categories.category','categories.category_image'])->distinct()->get();
         $PopularCategories= products::join('categories','categories.id','=','products.category_id')->
         select(['products.category_id','categories.category','categories.category_image'])->distinct()->get();
         return $this->returnData('done', $PopularCategories);
