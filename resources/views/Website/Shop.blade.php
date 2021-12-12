@@ -119,83 +119,24 @@
                     <div class="list-box category mb-3">
                         <div class="title">Category</div>
                         <ul>
+                            @foreach($categories as $singlecat)
                             <li class="">
                                 <div class="category">
-                                    <a>Shoes & Bags</a>
+                                    <a>{{$singlecat->category}}</a>
                                     <i class="fas fa-plus ml-auto"></i>
                                 </div>
+                               <?php
+    $sub[$singlecat->category] = App\Http\Models\sub_categories::where('category_id', $singlecat->id)->get();
+    $testfinal =$sub[$singlecat->category];
+                               ?>
+                                @foreach($testfinal as $final)
                                 <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
+                                    <a href="#">{{$final->sub_category_name}}</a>
                                 </div>
+                                @endforeach
                             </li>
-                            <li>
-                                <div class="category">
-                                    <a>Blouses & Shirts</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                                <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="category">
-                                    <a>Dresses</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                                <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="category">
-                                    <a>Swimwear</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                                <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="category">
-                                    <a>Beauty</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                                <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="category">
-                                    <a>Jewelry & Watch</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                                <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="category">
-                                    <a>Accessories</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                                <div class="sub-category">
-                                    <a href="#">Men's</a>
-                                    <a href="#">Women's</a>
-                                    <a href="#">Kids</a>
-                                </div>
-                            </li>
+                            @endforeach
+
                         </ul>
                     </div>
                     <!-- End Category -->
@@ -204,8 +145,10 @@
                     <div class="list-box filter mb-3">
                         <div class="title">Fill By Price</div>
                         <form action="" class="mt-5">
-                            <input type="number" class="js-range-slider" name="my_range" value=""/>
-                            <button type="button" class="mt-4"><i class='bx bx-filter-alt mr-2'></i>Filter</button>
+                            <input type="number" id="slideprice" class="js-range-slider" name="my_range" value="" />
+                            <input class="min" id="min" type="text" value="100">
+                            <input class="max" id="max" type="text" value="1000">
+                            <button type="submit" class="mt-4"><i class='bx bx-filter-alt mr-2'></i>Filter</button>
                         </form>
                     </div>
                     <!-- End Filter -->

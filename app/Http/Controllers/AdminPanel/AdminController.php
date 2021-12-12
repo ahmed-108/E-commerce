@@ -94,7 +94,7 @@ class AdminController extends BaseController
     }
     public function Add_SubCategory(Request $request){
         $rules=[
-            'sub_category_name'=>'max:255','required'
+//            'subcategory'=>'max:255','required'
         ];
         $validator= Validator::make($request->all(),$rules);
         if($validator->fails()){

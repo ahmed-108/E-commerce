@@ -27,6 +27,8 @@ Route::post('/RegisterUser/Register','Website\Website@customRegistration')->name
 Route::get('/logout','Website\Website@logout')->name('logout');
 Route::get('/','Website\Website@Index');
 Route::get('/Shop','Website\Website@Shop_View');
+Route::get('/category{category}','Website\Website@SingleCtageory')->name('single.category');
+
 
 
 

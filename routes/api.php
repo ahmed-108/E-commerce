@@ -30,6 +30,7 @@ Route::group(['namespace'=>'Website'],function(){
     Route::post("GetHighestPrices","API@GetHighestPrices")->name("get_subcategoryByID");
     Route::post("GetResultSearch","API@GetResultSearch")->name("get_subcategoryByID");
     Route::post("getmoetcatgeory","API@getmoetcatgeory")->name("getmoetcatgeory");
+    Route::post("GetCategoriesandSub","API@GetCategoriesandSub")->name("getmoetcatgeory");
 
 });
 

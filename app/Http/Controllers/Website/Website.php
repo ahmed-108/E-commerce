@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Models\Cart;
+use App\Http\Models\categories;
 use App\Http\Models\Comments;
 use App\Http\Models\products;
+use App\Http\Models\sub_categories;
 use App\Http\Models\user_login;
 use App\Traits\General_Traits;
 use http\Env\Url;
@@ -79,7 +81,9 @@ use General_Traits;
     }
 
     public function Shop_View(Request $request){
+
         if($request->get('sort')=="price_asc"){
+
             $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
             join('sub-category','sub-category.id','=','products.sub_category_id')->
             join('product_images','product_images.id','=','products.product_imagesID')->
@@ -89,6 +93,7 @@ use General_Traits;
             return view('Website.Shop',compact(['NewestProducts','count']));
 
         }elseif ($request->get('sort')=="price_desc"){
+
             $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
             join('sub-category','sub-category.id','=','products.sub_category_id')->
             join('product_images','product_images.id','=','products.product_imagesID')->
@@ -97,6 +102,7 @@ use General_Traits;
             $count=products::all()->count();
             return view('Website.Shop',compact(['NewestProducts','count']));
         }elseif ($request->get('sort')=="product_oldest"){
+
             $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
             join('sub-category','sub-category.id','=','products.sub_category_id')->
             join('product_images','product_images.id','=','products.product_imagesID')->
@@ -105,6 +111,7 @@ use General_Traits;
             $count=products::all()->count();
             return view('Website.Shop',compact(['NewestProducts','count']));
         }elseif ($request->get('sort')=="product_newest") {
+
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
@@ -114,6 +121,7 @@ use General_Traits;
             return view('Website.Shop', compact(['NewestProducts','count']));
         }
         elseif ($request->get('sort')=="lowest_rating") {
+
             $NewestProducts= Comments::
             join('products','products.id','=','comments.product_id')->
             join('categories','categories.id','=','products.category_id')->
@@ -124,6 +132,7 @@ use General_Traits;
             return view('Website.Shop', compact(['NewestProducts','count']));
         }
         elseif ($request->get('sort')=="highest_rating") {
+
             $NewestProducts= Comments::
             join('products','products.id','=','comments.product_id')->
             join('categories','categories.id','=','products.category_id')->
@@ -133,15 +142,28 @@ use General_Traits;
             $count=products::all()->count();
             return view('Website.Shop', compact(['NewestProducts','count']));
         }
-        else{
-            $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
-            join('sub-category','sub-category.id','=','products.sub_category_id')->
-            join('product_images','product_images.id','=','products.product_imagesID')->
-            orderBy('products.created_at','desc')->
+        else {
+            $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            orderBy('products.created_at', 'desc')->
             paginate(15);
-            $count=products::all()->count();
-            return view('Website.Shop',compact(['NewestProducts','count']));
+            $count = products::all()->count();
+            $categories = categories::all();
 
+
+            $categories = categories::select('id','category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+//                return $sub;
+//                $testfinal=$sub[$singlecat->category];
+//                foreach ($testfinal as $final){
+//                    return ($final);
+//                }
+            }
+
+
+            return view('Website.Shop',compact(['NewestProducts','count','categories','sub']));
         }
     }
 

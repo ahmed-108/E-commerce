@@ -184,4 +184,15 @@ use General_Traits;
         return $this->returnData('done', $PopularCategories);
     }
 
+    public function GetCategoriesandSub()
+    {
+        $category = categories::all();
+        foreach ($category as $cate) {
+            $subcategory = sub_categories::join('categories', 'categories.id', '=', 'sub-category.category_id')->
+            get();
+
+            return $this->returnData('data', $subcategory);
+        }
+    }
+
 }

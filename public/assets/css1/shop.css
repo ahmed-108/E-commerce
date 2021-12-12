@@ -12,15 +12,7 @@
     color: #d77f7a;
     color: #fff;
 }
-.page-item .page-link{
-    color: #088178;
-}
-.page-item.active .page-link {
-    z-index: 1;
-    color: #fff;
-    background-color: #088178;
-    border-color: blue;
-}
+
 /* Start Left */
 
 .shop .left .header .title {
@@ -250,5 +242,13 @@
         display: none;
     }
 }
-
+.page-item .page-link{
+    color: #088178;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #088178;
+    border-color: blue;
+}
 /* End Right */
