@@ -16,6 +16,7 @@
     <!-- Main Css File -->
     <link rel="stylesheet" href="../../assets/css1/style.css">
     <link rel="stylesheet" href="../../assets/css1/shop.css">
+    <link rel="stylesheet" href="../../assets/css1/single-product.css">
 
     <title> Evara </title>
 
@@ -157,11 +158,11 @@
         <div class="breadcrumb">
             <div class="container d-flex">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="/">Home</a>
                 </li>
                 <i class="fas fa-angle-right"></i>
                 <li>
-                    <a href="#">@yield('page')</a>
+                    <a class="categ" href="{{basename(Request::path())}}">@yield('page')</a>
                 </li>
             </div>
         </div>
@@ -329,6 +330,7 @@
 <script src="../../assets/vendor1/owl.carousel/owl.carousel.min.js"></script>
 <script src="../../assets/vendor1/fontawesome/all.min.js"></script>
 <script src="../../assets/vendor1/slick/slick.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/vendor1/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
 
 <!-- Main Js Files -->

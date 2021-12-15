@@ -10,7 +10,6 @@ class user_login  extends Authenticatable implements JWTSubject
 {
     protected $table= 'user_login';
     protected $fillable =['id','username','email','password','created_at','updated_at'];
-    protected $hidden=['created_at','updated_at'];
 
     public function getJWTIdentifier()
     {

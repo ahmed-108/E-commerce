@@ -1,7 +1,7 @@
 @extends('layouts.Header_Website')
 @section('Shop','active')
 @section('content')
-    @section('page','Shop')
+    @section('page',basename(Request::path()))
 <!-- Start Shop -->
 <div class="shop pt-5 pb-5">
     <div class="container">
@@ -59,7 +59,7 @@
                                             @if(isset($newproducts->discount))
                                                 <div class="persentage">-{{$newproducts->discount}} %</div>
                                             @endif
-                                            <a href="#">
+                                            <a href="/Product/{{$newproducts->product_id}}/{{$newproducts->title}}">
                                                 <img src="{{$newproducts->path}}" alt="">
                                             </a>
                                         </div>
@@ -70,9 +70,9 @@
                                                 </div>
                                             </a>
                                             <div class="category">
-                                                <a href="#">{{$newproducts->category}}</a>
+                                                <a href="/Shop/Category/{{$newproducts->category}}">{{$newproducts->category}}</a>
                                                 <span>-</span>
-                                                <a href="#">{{$newproducts->sub_category_name}}</a>
+                                                <a href="/Shop/Sub_Category/{{$newproducts->sub_category_name}}">{{$newproducts->sub_category_name}}</a>
                                             </div>
                                             <a href="#" class="Name">{{$newproducts->title}}</a>
                                             <div class="rating">
@@ -114,33 +114,7 @@
             <!-- Start Right -->
             <div class="col-lg-3">
                 <div class="right">
-
-                    <!-- Start Category -->
-                    <div class="list-box category mb-3">
-                        <div class="title">Category</div>
-                        <ul>
-                            @foreach($categories as $singlecat)
-                            <li class="">
-                                <div class="category">
-                                    <a>{{$singlecat->category}}</a>
-                                    <i class="fas fa-plus ml-auto"></i>
-                                </div>
-                               <?php
-    $sub[$singlecat->category] = App\Http\Models\sub_categories::where('category_id', $singlecat->id)->get();
-    $testfinal =$sub[$singlecat->category];
-                               ?>
-                                @foreach($testfinal as $final)
-                                <div class="sub-category">
-                                    <a href="#">{{$final->sub_category_name}}</a>
-                                </div>
-                                @endforeach
-                            </li>
-                            @endforeach
-
-                        </ul>
-                    </div>
-                    <!-- End Category -->
-
+                    @include('layouts.Listctageories')
                     <!-- Start Filter -->
                     <div class="list-box filter mb-3">
                         <div class="title">Fill By Price</div>

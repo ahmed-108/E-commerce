@@ -27,7 +27,11 @@ Route::post('/RegisterUser/Register','Website\Website@customRegistration')->name
 Route::get('/logout','Website\Website@logout')->name('logout');
 Route::get('/','Website\Website@Index');
 Route::get('/Shop','Website\Website@Shop_View');
-Route::get('/category{category}','Website\Website@SingleCtageory')->name('single.category');
+Route::get('/Shop/Category/{id}','Website\Website@SingleCategory_View')->name('single.category');
+Route::get('/Shop/Sub_Category/{id}','Website\Website@Single_SubCategory_View')->name('single.category');
+Route::get('/Product/{id}/{product_name}','Website\Website@Single_Product');
+Route::post('/Product/comment','Website\Website@postcomments')->name('post.comment');
+
 
 
 

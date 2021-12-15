@@ -14,7 +14,12 @@
 }
 
 /* ----------------------------------------- */
-
+.category{
+    color: #6e6e6e;
+}
+.category:hover{
+    color: #088178;
+}
 /* Start product */
 
     /* Start Left-product */
@@ -320,7 +325,7 @@
 
     .add-review form .textbox textarea:hover {
         border-color: #088178;
-    }   
+    }
 
     .add-review form .number {
         padding: 3px 8px;
@@ -349,7 +354,7 @@
     }
 
     /* End Add-review */
-    
+
     /* *********************************************************** */
 
     /* Start Reviews */
@@ -357,7 +362,7 @@
     .product .reviews .left .sub-title {
         color: #2a2a2a;
         font-size: 20px;
-        font-weight: 600;   
+        font-weight: 600;
     }
     @media (max-width: 450px) {
         .product .reviews .left .sub-title {
