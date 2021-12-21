@@ -31,8 +31,13 @@ Route::get('/Shop/Category/{id}','Website\Website@SingleCategory_View')->name('s
 Route::get('/Shop/Sub_Category/{id}','Website\Website@Single_SubCategory_View')->name('single.category');
 Route::get('/Product/{id}/{product_name}','Website\Website@Single_Product');
 Route::post('/Product/comment','Website\Website@postcomments')->name('post.comment');
+Route::get('/Cart','Website\Website@CartIndex');
+Route::get('/ChangeQuantity/{id}/{qty}','Website\Website@ChangeQuantity');
+Route::get('/delete/{id}','Website\Website@deleteitemcart')->name('delete.item');
+Route::get('/delete/{id}','Website\Website@deleteitemcart')->name('delete.item');
+Route::get('/TruncateCart','Website\Website@TruncateCart')->name('delete.allitems');
 
-
+Route::get('/addcart/{product_id?}/{user_id?}/{price}','Website\Website@AddItemToCard')->name('Add.To.Cart');
 
 
 

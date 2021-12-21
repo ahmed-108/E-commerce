@@ -14,14 +14,14 @@
 }
 
 /* ----------------------------------------- */
+
+/* Start product */
 .category{
     color: #6e6e6e;
 }
 .category:hover{
     color: #088178;
 }
-/* Start product */
-
     /* Start Left-product */
     .product .left .slider-single .item {
         height: 600px;

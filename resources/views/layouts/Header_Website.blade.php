@@ -3,7 +3,6 @@
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Vendor Css Files -->
     <link rel="stylesheet" href="../../assets/vendor1/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../../assets/vendor1/fontawesome/all.css">
@@ -17,6 +16,7 @@
     <link rel="stylesheet" href="../../assets/css1/style.css">
     <link rel="stylesheet" href="../../assets/css1/shop.css">
     <link rel="stylesheet" href="../../assets/css1/single-product.css">
+    <link rel="stylesheet" href="../../assets/css1/cart.css">
 
     <title> Evara </title>
 
@@ -93,9 +93,9 @@
                         <i class='bx bx-heart'></i>
                         <div class="number">4</div>
                     </a>
-                    <a href="#">
+                    <a href="{{url('/Cart')}}">
                         <i class='bx bx-shopping-bag' ></i>
-                        <div class="number">2</div>
+                        <div class="number">{{$Count_cart}}</div>
                     </a>
                     <a href="#">
                         <i class='bx bx-user' ></i>
@@ -330,8 +330,6 @@
 <script src="../../assets/vendor1/owl.carousel/owl.carousel.min.js"></script>
 <script src="../../assets/vendor1/fontawesome/all.min.js"></script>
 <script src="../../assets/vendor1/slick/slick.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../../assets/vendor1/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
 
 <!-- Main Js Files -->
 <script src="../../assets/js1/main.js"></script>

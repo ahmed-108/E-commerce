@@ -50,6 +50,28 @@
                     </div>
                     <!-- End Header -->
                     <!-- Start Items -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>{{ Session::get('success') }}</strong>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>{{ Session::get('error') }}</strong>
+                        </div>
+                    @endif
                     <div class="items new-added">
                         <div class="row">
                             @foreach($NewestProducts as $newproducts)
@@ -64,7 +86,7 @@
                                             </a>
                                         </div>
                                         <div class="info-box">
-                                            <a href="" class="cart">
+                                            <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
                                                 <div class="content">
                                                     <i class='bx bx-shopping-bag'></i>
                                                 </div>
