@@ -10,6 +10,12 @@
             <strong>{{ Session::get('success') }}</strong>
         </div>
     @endif
+        @if (Session::get('error'))
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ Session::get('error') }}</strong>
+            </div>
+    @endif
     <!-- Start Table -->
     <div id="cart" class="table-responsive-lg mb-2">
         <table class="table table-hover text-center">
@@ -96,7 +102,7 @@
                 <a href="{{url('/Shop')}}" class="mr-3"><i class="fas fa-long-arrow-alt-left mr-2"></i> Continue Shopping</a>
             </div>
             <div class="right ml-auto">
-                <a href="#">Proceed To CheckOut <i class="fas fa-sign-out-alt ml-2"></i></a>
+                <a href="{{url('/checkout')}}">Proceed To CheckOut <i class="fas fa-sign-out-alt ml-2"></i></a>
             </div>
         </div>
     </div>

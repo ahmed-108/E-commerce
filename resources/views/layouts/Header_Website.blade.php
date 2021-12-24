@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="../../assets/css1/shop.css">
     <link rel="stylesheet" href="../../assets/css1/single-product.css">
     <link rel="stylesheet" href="../../assets/css1/cart.css">
+    <link rel="stylesheet" href="../../assets/css1/checkout.css">
+
 
     <title> Evara </title>
 

@@ -34,10 +34,13 @@ Route::post('/Product/comment','Website\Website@postcomments')->name('post.comme
 Route::get('/Cart','Website\Website@CartIndex');
 Route::get('/ChangeQuantity/{id}/{qty}','Website\Website@ChangeQuantity');
 Route::get('/delete/{id}','Website\Website@deleteitemcart')->name('delete.item');
-Route::get('/delete/{id}','Website\Website@deleteitemcart')->name('delete.item');
 Route::get('/TruncateCart','Website\Website@TruncateCart')->name('delete.allitems');
-
 Route::get('/addcart/{product_id?}/{user_id?}/{price}','Website\Website@AddItemToCard')->name('Add.To.Cart');
+##############################
+Route::get('/checkout','Website\Website@checkout_view');
+Route::post('/Send_order','Website\Website@update_billing_details')->name('confirm.order');
+
+
 
 
 

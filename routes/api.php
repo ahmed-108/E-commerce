@@ -41,6 +41,7 @@ Route::group(['namespace'=>'Website','middleware'=>['auth.guard:user_api']], fun
     Route::post('/postcomment','AuthLogin@postcomments');
     Route::post('/AddItemToCard','AuthLogin@AddItemToCard');
     Route::post('/GetCart','AuthLogin@GetCart');
+    Route::post('/DeleteAccount','AuthLogin@DeleteAccount');
 
 
 });

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+
 class AuthLogin extends BaseController
 {
 use General_Traits;
@@ -142,12 +143,23 @@ use General_Traits;
         }
 
     }
-
     public function GetCart(){
         $data= Cart::join('products','products.id','=','cart.product_id')->
         join('user_login','user_login.id','=','cart.user_id')->get();
         return $this->returnData("the cart", $data);
 
+    }
+    public function DeleteAccount(){
+        try {
+            if(auth('user_api')->id()!=null){
+                user_login::destroy(auth('user_api')->id());
+                return $this->returnSuccessMessage('The account has been deleted');
+            }else{
+                return $this->returnError('E3232','Please login to your account');
+            }
+        }catch (\Exception $ex){
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
     }
 
 }

@@ -28,5 +28,11 @@ class user_login  extends Authenticatable implements JWTSubject
     public function comments(){
         return $this->hasMany('App\Http\Models\Comments');
     }
+    public function bilingdetails(){
+        return $this->hasOne('App\Http\Models\billing_details');
+    }
+    public function orders(){
+        return $this->hasMany('App\Http\Models\orders');
+    }
 
 }

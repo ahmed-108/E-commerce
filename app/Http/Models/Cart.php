@@ -16,5 +16,7 @@ class Cart extends Model
     public function user(){
         return $this->hasOne('App\Http\Models\user_login');
     }
-
+    public function orders(){
+        return $this->hasOne('App\Http\Models\orders');
+    }
 }
