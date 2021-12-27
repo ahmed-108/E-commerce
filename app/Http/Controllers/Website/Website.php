@@ -545,29 +545,27 @@ class Website extends BaseController
         return view('Website.Cart', compact(['Products_Cart', 'Count_cart', 'total_price']));
     }
 
-    public function AddItemToCard($product_id, $user_id, $total = null, $quantity = 1)
+    public function AddItemToCard($product_id, $user_id=null, $total = null, $quantity = 1)
     {
         try {
-            $valid = auth('user')->id();
-            if ($valid) {
-                $rules = [
-                    $product_id => 'unique:cart,product_id',
+            if($user_id==null){
+                return back()->with('error' ,'Please Login');
+            }else{
+                $rules=[
+                    $product_id=> 'unique:cart,product_id',
                 ];
-                $validator = Validator::make(array($product_id), $rules);
-                if ($validator->fails()) {
-                    return back()->with('error', 'this product is already in cart');
-                } else {
+                $validator= Validator::make(array($product_id),$rules);
+                if($validator->fails()){
+                    return back()->with('error' ,'this product is already in cart');
+                }else {
                     Cart::create([
                         'product_id' => $product_id,
                         'user_id' => $user_id,
                         'quantity' => $quantity,
-                        'Sub_total' => $total
+                        'Sub_total'=>$total
                     ]);
                     return back()->with('success', "Added");
                 }
-            } else {
-                return back()->with('error', 'Please Login');
-
             }
         } catch (\Exception $ex) {
             return back()->with('error', $ex->getMessage());

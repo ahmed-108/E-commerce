@@ -87,7 +87,7 @@
                                             </a>
                                         </div>
                                         <div class="info-box">
-                                            <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id()] ) }}" class="cart">
+                                            <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
                                                 <div class="content">
                                                     <i class='bx bx-shopping-bag'></i>
                                                 </div>

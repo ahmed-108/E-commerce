@@ -332,6 +332,7 @@
 <script src="../../assets/vendor1/fontawesome/all.min.js"></script>
 <script src="../../assets/vendor1/slick/slick.min.js"></script>
 <script src="../../assets/vendor1/swiper/swiper.min.js"></script>
+<script src="../../assets/vendor1/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
 
 <!-- Main Js Files -->
 <script src="../../assets/js1/main.js"></script>

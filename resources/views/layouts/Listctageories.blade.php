@@ -12,6 +12,7 @@
                 $sub[$singlecat->category] = App\Http\Models\sub_categories::where('category_id', $singlecat->id)->get();
                 $testfinal =$sub[$singlecat->category];
                 ?>
+
                 @foreach($testfinal as $final)
                     <div class="sub-category">
                         <a href="/Shop/Sub_Category/{{$final->sub_category_name}}">{{$final->sub_category_name}}</a>
