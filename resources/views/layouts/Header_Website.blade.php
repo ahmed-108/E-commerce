@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../assets/vendor1/slick/slick.css">
     <link rel="stylesheet" href="../../assets/vendor1/ion.rangeSlider-master/css/ion.rangeSlider.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images1/icon.png">
+    <link rel="stylesheet" href="../../assets/vendor1/swiper/swiper.min.css">
 
     <!-- Main Css File -->
     <link rel="stylesheet" href="../../assets/css1/style.css">
@@ -18,6 +19,9 @@
     <link rel="stylesheet" href="../../assets/css1/single-product.css">
     <link rel="stylesheet" href="../../assets/css1/cart.css">
     <link rel="stylesheet" href="../../assets/css1/checkout.css">
+    <link rel="stylesheet" href="../../assets/css1/about.css">
+    <link rel="stylesheet" href="../../assets/css1/my-Account.css">
+    <link rel="stylesheet" href="../../assets/css1/contact.css">
 
 
     <title> Evara </title>
@@ -99,7 +103,7 @@
                         <i class='bx bx-shopping-bag' ></i>
                         <div class="number">{{$Count_cart}}</div>
                     </a>
-                    <a href="#">
+                    <a href="{{url('Profile')}}">
                         <i class='bx bx-user' ></i>
                     </a>
                 </div>
@@ -123,16 +127,13 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item @yield('About')">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="{{url('/aboutus')}}">About</a>
                     </li>
                     <li class="nav-item @yield('Shop')">
                         <a class="nav-link" href="{{url('/Shop')}}">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @yield('Blogs')" href="#">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @yield('Contact')" href="contact.html">Contact</a>
+                        <a class="nav-link @yield('Contact')" href="{{url('/contactus')}}">Contact</a>
                     </li>
                 </ul>
                 <form action="" class="mt-2 mb-2">
@@ -151,8 +152,6 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Start Carousel -->
-    <!-- End Carousel -->
 
 </div>
 <!-- End Header -->
@@ -332,6 +331,7 @@
 <script src="../../assets/vendor1/owl.carousel/owl.carousel.min.js"></script>
 <script src="../../assets/vendor1/fontawesome/all.min.js"></script>
 <script src="../../assets/vendor1/slick/slick.min.js"></script>
+<script src="../../assets/vendor1/swiper/swiper.min.js"></script>
 
 <!-- Main Js Files -->
 <script src="../../assets/js1/main.js"></script>

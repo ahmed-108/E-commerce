@@ -6,6 +6,7 @@ use App\Http\Models\billing_details;
 use App\Http\Models\Cart;
 use App\Http\Models\categories;
 use App\Http\Models\Comments;
+use App\Http\Models\contact_us;
 use App\Http\Models\orders;
 use App\Http\Models\products;
 use App\Http\Models\sub_categories;
@@ -93,7 +94,15 @@ class Website extends BaseController
         join('products', 'products.id', '=', 'cart.product_id')->
         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
         where('user_login.id', '=', auth('user')->id())->count();
-        return view('Website.index', compact(['NewestProducts', 'PopularCategories', 'Count_cart']));
+        $popular_products = Comments::
+        join('products', 'products.id', '=', 'comments.product_id')->
+        join('categories', 'categories.id', '=', 'products.category_id')->
+        join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+        join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+        where('comments.rating', '>=', 2)->
+        groupBy('comments.product_id')->get();
+
+        return view('Website.index', compact(['NewestProducts', 'popular_products', 'PopularCategories', 'Count_cart']));
     }
 
     public function Shop_View(Request $request)
@@ -111,7 +120,16 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $count = products::all()->count();
-            return view('Website.Shop', compact(['NewestProducts', 'count', 'Count_cart']));
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
@@ -125,7 +143,17 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.Shop', compact(['NewestProducts', 'count', 'Count_cart']));
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+
         } elseif ($request->get('sort') == "product_oldest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -138,7 +166,16 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.Shop', compact(['NewestProducts', 'count', 'Count_cart']));
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -151,7 +188,16 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.Shop', compact(['NewestProducts', 'count', 'Count_cart']));
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -165,7 +211,16 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.Shop', compact(['NewestProducts', 'count', 'Count_cart']));
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -179,7 +234,16 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $count = products::all()->count();
-            return view('Website.Shop', compact(['NewestProducts', 'count', 'Count_cart']));
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } else {
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -192,11 +256,19 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
             $categories = categories::select('id', 'category')->get();
             foreach ($categories as $singlecat) {
                 $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
             }
-            return view('Website.Shop', compact(['NewestProducts', 'Count_cart', 'count', 'categories', 'sub']));
+            return view('Website.Shop', compact(['NewestProducts', 'Count_cart', 'count', 'popular_products', 'categories', 'sub']));
         }
     }
 
@@ -472,12 +544,12 @@ class Website extends BaseController
         select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
         return view('Website.Cart', compact(['Products_Cart', 'Count_cart', 'total_price']));
     }
-    public function AddItemToCard($product_id, $user_id = null, $total = null, $quantity = 1)
+
+    public function AddItemToCard($product_id, $user_id, $total = null, $quantity = 1)
     {
         try {
-            if ($user_id == null) {
-                return back()->with('error', 'Please Login');
-            } else {
+            $valid = auth('user')->id();
+            if ($valid) {
                 $rules = [
                     $product_id => 'unique:cart,product_id',
                 ];
@@ -493,6 +565,9 @@ class Website extends BaseController
                     ]);
                     return back()->with('success', "Added");
                 }
+            } else {
+                return back()->with('error', 'Please Login');
+
             }
         } catch (\Exception $ex) {
             return back()->with('error', $ex->getMessage());
@@ -500,10 +575,12 @@ class Website extends BaseController
 
     }
 
-    public function TruncateCart(){
-        Cart::truncate()->where('user_login.id','=',auth('user')->id());
-        return back()->with('success' ,'Now, The cart is empty');
+    public function TruncateCart()
+    {
+        Cart::truncate()->where('user_login.id', '=', auth('user')->id());
+        return back()->with('success', 'Now, The cart is empty');
     }
+
     public function deleteitemcart($id)
     {
         Cart::destroy($id);
@@ -530,14 +607,14 @@ class Website extends BaseController
 
         $total_price = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
         select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
-        if(auth('user')->id()){
-            if($Count_cart==0) {
+        if (auth('user')->id()) {
+            if ($Count_cart == 0) {
                 return redirect('/Cart')->with('error', 'Please add one item at least to go to the checkout');
-            }else{
+            } else {
 
                 return view('Website.CheckOut', compact(['Count_cart', 'total_price', 'count_checkout', 'Products_Cart', 'billing_details']));
             }
-        }else{
+        } else {
             return redirect('/Cart')->with('error', 'Please login to your account');
         }
     }
@@ -547,7 +624,7 @@ class Website extends BaseController
         try {
             $find_id = billing_details::join('user_login', 'user_login.id', '=', 'billing_details.user_id')->
             where('billing_details.user_id', '=', auth('user')->id())->exists();
-            if ($find_id ==1) {
+            if ($find_id == 1) {
                 $update_billing_details = billing_details::join('user_login', 'user_login.id', '=', 'billing_details.user_id')->
                 where('billing_details.user_id', '=', auth('user')->id())->first(['billing_details.id']);
                 $update_billing_details->full_name = $request->full_name;
@@ -562,10 +639,10 @@ class Website extends BaseController
                 $update_billing_details->save();
                 //handle the order
 
-                $order = Cart::join('billing_details','billing_details.user_id','=','cart.user_id')->distinct()->
+                $order = Cart::join('billing_details', 'billing_details.user_id', '=', 'cart.user_id')->distinct()->
                 get(['billing_details.id']);
-                $total_invoice=Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
-                select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id() )->sum('cart.Sub_total');
+                $total_invoice = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+                select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
                 $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
                 join('products', 'products.id', '=', 'cart.product_id')->
                 join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
@@ -575,21 +652,21 @@ class Website extends BaseController
                         'user_id' => auth('user')->id(),
                         'total_invoice' => $total_invoice,
                         'billing_details_ID' => $orders->id,
-                        'items'=>$Count_cart,
-                        'status'=>0
+                        'items' => $Count_cart,
+                        'status' => 0
                     ]);
                 }
-                Cart::truncate()->where('user_login.id','=',auth('user')->id());
+                Cart::truncate()->where('user_login.id', '=', auth('user')->id());
 
                 return redirect('/Cart')->with('success', "Your order has been Sent");
 
             } else {
                 $rules = [
-                    'user_id'=>'required',
+                    'user_id' => 'required',
                     'full_name' => 'required',
                     'phone1' => 'required',
                     'city' => 'required',
-                    'country'=>'required',
+                    'country' => 'required',
                     'zip_code' => 'required',
                     'full_address' => 'required',
                     'payment_method' => 'required',
@@ -599,13 +676,13 @@ class Website extends BaseController
                     return redirect()->back()->withErrors($validator);
                 } else {
                     if ($request->payment_method == 'cash') {
-                       $cash= $request->payment_method = 'cash';
+                        $cash = $request->payment_method = 'cash';
                         billing_details::create([
                             'user_id' => $request->user_id,
                             'full_name' => $request->full_name,
                             'phone1' => $request->phone1,
                             'phone2' => $request->phone2,
-                            'country'=>$request->country,
+                            'country' => $request->country,
                             'city' => $request->city,
                             'zip_code' => $request->zip_code,
                             'full_address' => $request->full_address,
@@ -614,10 +691,10 @@ class Website extends BaseController
                         ]);
                         //handle the order
 
-                        $order = Cart::join('billing_details','billing_details.user_id','=','cart.user_id')->distinct()->
+                        $order = Cart::join('billing_details', 'billing_details.user_id', '=', 'cart.user_id')->distinct()->
                         get(['billing_details.id']);
-                        $total_invoice=Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
-                        select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id() )->sum('cart.Sub_total');
+                        $total_invoice = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+                        select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
                         $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
                         join('products', 'products.id', '=', 'cart.product_id')->
                         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
@@ -627,34 +704,34 @@ class Website extends BaseController
                                 'user_id' => auth('user')->id(),
                                 'total_invoice' => $total_invoice,
                                 'billing_details_ID' => $orders->id,
-                                'items'=>$Count_cart,
-                                'status'=>0
+                                'items' => $Count_cart,
+                                'status' => 0
                             ]);
                         }
-                        Cart::truncate()->where('user_login.id','=',auth('user')->id());
+                        Cart::truncate()->where('user_login.id', '=', auth('user')->id());
 
                         return redirect('/Cart')->with('success', "Your order has been Sent");
 
-                    }else{
-                       $paypal= $request->payment_method = 'paypal';
-                       billing_details::create([
-                            'user_id' =>  $request->user_id,
+                    } else {
+                        $paypal = $request->payment_method = 'paypal';
+                        billing_details::create([
+                            'user_id' => $request->user_id,
                             'full_name' => $request->full_name,
                             'phone1' => $request->phone1,
                             'phone2' => $request->phone2,
-                            'country'=>$request->country,
+                            'country' => $request->country,
                             'city' => $request->city,
                             'zip_code' => $request->zip_code,
                             'full_address' => $request->full_address,
                             'notes' => $request->notes,
                             'payment_method' => $paypal,
                         ]);
-                     ///handle the order
+                        ///handle the order
                         ///
-                        $order = Cart::join('billing_details','billing_details.user_id','=','cart.user_id')->distinct()->
+                        $order = Cart::join('billing_details', 'billing_details.user_id', '=', 'cart.user_id')->distinct()->
                         get(['billing_details.id']);
-                        $total_invoice=Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
-                        select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id() )->sum('cart.Sub_total');
+                        $total_invoice = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+                        select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
                         $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
                         join('products', 'products.id', '=', 'cart.product_id')->
                         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
@@ -664,11 +741,11 @@ class Website extends BaseController
                                 'user_id' => auth('user')->id(),
                                 'total_invoice' => $total_invoice,
                                 'billing_details_ID' => $orders->id,
-                                'items'=>$Count_cart,
-                                'status'=>0
+                                'items' => $Count_cart,
+                                'status' => 0
                             ]);
                         }
-                        Cart::truncate()->where('user_login.id','=',auth('user')->id());
+                        Cart::truncate()->where('user_login.id', '=', auth('user')->id());
 
                         return redirect('/Cart')->with('success', "Your order has been Sent");
                     }
@@ -681,5 +758,97 @@ class Website extends BaseController
 
     }
 
+    public function view_account()
+    {
+        $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+        join('products', 'products.id', '=', 'cart.product_id')->
+        join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+        where('user_login.id', '=', auth('user')->id())->count();
 
+        $orders = orders::join('user_login', 'user_login.id', '=', 'orders.user_id')->where('orders.user_id', '=', auth('user')->id())
+            ->get(['orders.created_at', 'orders.id', 'orders.status', 'orders.total_invoice', 'orders.items']);
+
+        $account_info = billing_details::join('user_login', 'user_login.id', '=', 'billing_details.user_id')->
+        where('billing_details.user_id', '=', auth('user')->id())->get();
+
+
+        return view('Website.Profile', compact('Count_cart', 'orders', 'account_info'));
+    }
+
+    public function update_info(Request $request)
+    {
+        $update_info = billing_details::join('user_login', 'user_login.id', '=', 'billing_details.user_id')->
+        where('billing_details.user_id', '=', auth('user')->id())->first(['billing_details.id']);
+        $update_info->full_name = $request->full_name;
+        $update_info->phone1 = $request->phone1;
+        $update_info->phone2 = $request->phone2;
+        $update_info->country = $request->country;
+        $update_info->city = $request->city;
+        $update_info->zip_code = $request->zip_code;
+        $update_info->full_address = $request->full_address;
+        $update_info->save();
+        return back()->with('success', 'The account info has been updated');
+    }
+
+    public function GetPopularProducts()
+    {
+        $NewestProducts = Comments::
+        join('products', 'products.id', '=', 'comments.product_id')->
+        join('categories', 'categories.id', '=', 'products.category_id')->
+        join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+        join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+        where('comments.rating', '>=', 2)->
+        groupBy('comments.product_id')->
+        get(['products.id', 'categories.category', 'sub-category.sub_category_name', 'products.title', 'products.price',
+            'products.short_description', 'product_images.path', 'comments.rating']);
+        return $this->returnData("done", $NewestProducts);
+    }
+
+#########################################
+    public function about_view()
+    {
+        $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+        join('products', 'products.id', '=', 'cart.product_id')->
+        join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+        where('user_login.id', '=', auth('user')->id())->count();
+        return view('Website.About_Us', compact(['Count_cart']));
+    }
+
+    public function contact_view()
+    {
+        $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+        join('products', 'products.id', '=', 'cart.product_id')->
+        join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+        where('user_login.id', '=', auth('user')->id())->count();
+        return view('Website.Contact_Us', compact(['Count_cart']));
+    }
+
+    public function send_mail(Request $request)
+    {
+        try {
+            $rules = [
+                'first_name' => 'required',
+                "email" => "required",
+                "phone" => "required",
+                "subject" => "required",
+                "message" => "required",
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator);
+            }
+            contact_us::create([
+                'first_name' => $request->first_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'subject' => $request->subject,
+                'message' => $request->message,
+
+            ]);
+            return back()->with('success', "The mail has been sent");
+
+        } catch (\Exception $ex) {
+            return back()->with('error', $ex->getMessage());
+        }
+    }
 }

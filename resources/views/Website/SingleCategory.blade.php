@@ -82,7 +82,7 @@
                                             @if(isset($newproducts->discount))
                                                 <div class="persentage">-{{$newproducts->discount}} %</div>
                                             @endif
-                                            <a href="#">
+                                            <a href="/Product/{{$newproducts->product_id}}/{{$newproducts->title}}">
                                                 <img src="{{$newproducts->path}}" alt="">
                                             </a>
                                         </div>
@@ -97,7 +97,7 @@
                                                 <span>-</span>
                                                 <a href="/Shop/Sub_Category/{{$newproducts->sub_category_name}}">{{$newproducts->sub_category_name}}</a>
                                             </div>
-                                            <a href="#" class="Name">{{$newproducts->title}}</a>
+                                            <a href="/Product/{{$newproducts->product_id}}/{{$newproducts->title}}" class="Name">{{$newproducts->title}}</a>
                                             <div class="rating">
                                                 <i class="far fa-star"></i>
                                                 <i class="far fa-star"></i>
@@ -138,17 +138,6 @@
             <div class="col-lg-3">
                 <div class="right">
                 @include('layouts.Listctageories')
-                    <!-- Start Filter -->
-                    <div class="list-box filter mb-3">
-                        <div class="title">Fill By Price</div>
-                        <form action="" class="mt-5">
-                            <input type="number" id="slideprice" class="js-range-slider" name="my_range" value="" />
-                            <input class="min" id="min" type="text" value="100">
-                            <input class="max" id="max" type="text" value="1000">
-                            <button type="submit" class="mt-4"><i class='bx bx-filter-alt mr-2'></i>Filter</button>
-                        </form>
-                    </div>
-                    <!-- End Filter -->
 
                     <!-- Start Banar -->
                     <div class="banar">

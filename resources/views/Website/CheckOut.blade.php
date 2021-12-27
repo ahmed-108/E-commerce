@@ -5,11 +5,11 @@
     <div class="breadcrumb">
         <div class="container d-flex">
             <li>
-                <a href="index.html">Home</a>
+                <a href="{{url('/')}}">Home</a>
             </li>
             <i class="fas fa-angle-right"></i>
             <li>
-                <a href="#">Shop</a>
+                <a href="{{url('/Shop')}}">Shop</a>
             </li>
             <i class="fas fa-angle-right"></i>
             <li>

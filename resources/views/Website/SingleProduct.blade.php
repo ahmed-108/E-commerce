@@ -89,9 +89,6 @@
                         </div>
                         <div class="d-flex align-items-center mt-4 mb-5">
                             <button type="submit" onclick="location.href='{{route('Add.To.Cart',[$product->product_id, auth('user')->id(),$product->price])}}';" class="add mr-2 ml-2">Add to Cart</button>
-                            <button class="heart">
-                                <i class='bx bx-heart'></i>
-                            </button>
                         </div>
                         <hr>
                         <div class="stock mt-4">Availability: <span>8 Items In Stock</span></div>

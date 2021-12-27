@@ -138,15 +138,7 @@
                 <div class="right">
                     @include('layouts.Listctageories')
                     <!-- Start Filter -->
-                    <div class="list-box filter mb-3">
-                        <div class="title">Fill By Price</div>
-                        <form action="" class="mt-5">
-                            <input type="number" id="slideprice" class="js-range-slider" name="my_range" value="" />
-                            <input class="min" id="min" type="text" value="100">
-                            <input class="max" id="max" type="text" value="1000">
-                            <button type="submit" class="mt-4"><i class='bx bx-filter-alt mr-2'></i>Filter</button>
-                        </form>
-                    </div>
+
                     <!-- End Filter -->
 
                     <!-- Start Banar -->

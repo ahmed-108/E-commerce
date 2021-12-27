@@ -40,7 +40,14 @@ Route::get('/addcart/{product_id?}/{user_id?}/{price}','Website\Website@AddItemT
 Route::get('/checkout','Website\Website@checkout_view');
 Route::post('/Send_order','Website\Website@update_billing_details')->name('confirm.order');
 
+########################
+Route::get('/Profile','Website\Website@view_account');
 
 
+Route::post('/update_info','Website\Website@update_info')->name('update_info');
+
+Route::get('/aboutus','Website\Website@about_view');
+Route::get('/contactus','Website\Website@contact_view');
+Route::post('/send_mail','Website\Website@send_mail')->name('send.email');
 
 
