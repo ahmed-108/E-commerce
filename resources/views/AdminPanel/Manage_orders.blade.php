@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="../../../assets/css/demo_1/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
-    <link href="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.css" rel="stylesheet">
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
@@ -69,85 +68,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('manage.orders')}}" class="nav-link">
+                    <a href="{{route('manage.orders')}}" class="nav-link active">
                         <i class="link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">Manage Orders</span>
                     </a>
                 </li>
                 <li class="nav-item nav-category">Manage the website</li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#uiComponents" role="button" aria-expanded="false" aria-controls="uiComponents">
-                        <i class="link-icon" data-feather="feather"></i>
-                        <span class="link-title">UI Kit</span>
-                        <i class="link-arrow" data-feather="chevron-down"></i>
+                    <a href="{{route('manage.mails')}}" class="nav-link ">
+                        <i class="link-icon" data-feather="shopping-cart"></i>
+                        <span class="link-title">Manage Mails</span>
                     </a>
-                    <div class="collapse" id="uiComponents">
-                        <ul class="nav sub-menu">
-                            <li class="nav-item">
-                                <a href="pages/ui-components/alerts.html" class="nav-link">Alerts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/badges.html" class="nav-link">Badges</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/breadcrumbs.html" class="nav-link">Breadcrumbs</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/buttons.html" class="nav-link">Buttons</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/button-group.html" class="nav-link">Button group</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/cards.html" class="nav-link">Cards</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/carousel.html" class="nav-link">Carousel</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/collapse.html" class="nav-link">Collapse</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/dropdowns.html" class="nav-link">Dropdowns</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/list-group.html" class="nav-link">List group</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/media-object.html" class="nav-link">Media object</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/modal.html" class="nav-link">Modal</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/navs.html" class="nav-link">Navs</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/navbar.html" class="nav-link">Navbar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/pagination.html" class="nav-link">Pagination</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/popover.html" class="nav-link">Popovers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/progress.html" class="nav-link">Progress</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/scrollbar.html" class="nav-link">Scrollbar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/scrollspy.html" class="nav-link">Scrollspy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/spinners.html" class="nav-link">Spinners</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/ui-components/tooltips.html" class="nav-link">Tooltips</a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#advancedUI" role="button" aria-expanded="false" aria-controls="advancedUI">
@@ -376,7 +307,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('logout')}}" class="nav-link">
+                                        <a href="javascript:;" class="nav-link">
                                             <i data-feather="log-out"></i>
                                             <span>Log Out</span>
                                         </a>
@@ -391,171 +322,92 @@
         <!-- partial -->
         <div class="page-content">
             <div class="row">
-                @if ( session('success') )
-                    <div class="alert alert-success" style="width: 100% !important;text-align: center;" role="alert">{{ session('success') }}</div>
-                @endif
-                @if ( session('error') )
-                    <div class="alert alert-danger" style="width: 100% !important;text-align: center;" role="alert">{{ session('error') }}</div>
-                @endif
+
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="card-title">Manage Products</h6>
+                            <h6 class="card-title">Manage Orders</h6>
                             <div class="table-responsive">
-                                <button type="button" style="float: right;" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    Add
-                                </button><br><br>
-            {{--  start add modal--}}
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add new Category</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form method="post" action="{{route('add.products')}}" enctype="multipart/form-data">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Product Title:</label>
-                                                        <input type="text" class="form-control" name="product_title" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Short Description:</label>
-                                                        <textarea class="form-control" name="short_description" id="recipient-name"> </textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Long Description:</label>
-                                                        <textarea class="form-control" name="long_description" id="recipient-name"> </textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">Product Price:</label>
-                                                        <input type="text" class="form-control" name="product_price" id="recipient-name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="col-form-label">the discount:</label>
-                                                        <input type="text" class="form-control percent" name="product_discount" id="percent">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>The Main Category</label>
-                                                        <select name="main_category" class="js-example-basic-single w-100">
-                                                            @foreach($All_Categories as $category)
-                                                                <option value="{{$category->id}}">{{$category->category}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>The Sub Category</label>
-                                                        <select name="sub_category" class="js-example-basic-single w-100">
-                                                            @foreach($all_subcategories as $subcategory)
-                                                                <option value="{{$subcategory->id}}">{{$subcategory->sub_category_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="field">
-                                                            <label for="recipient-name" class="col-form-label">Images:</label>
-                                                            <input type="file" class="form-control" name="product_images" id="recipient-name">
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Add</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-            {{--  End add modal--}}
 {{--            Start the table --}}
                                 <table id="dataTableExample" class="table">
                                     <thead>
                                     <tr>
-                                        <th>Product title</th>
-                                        <th>The Sub-Product</th>
-                                        <th>Product Price</th>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th>Username</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($all_products as $product)
-                                        <tr id="category{{$product->id}}">
-                                            <td> {{$product->title}} </td>
-                                            <span style="visibility: hidden;">{{$subcategory= \App\Http\Models\sub_categories::select(array('sub_category_name'))->where('id',$product->sub_category_id )->get()}}</span>
-                                            @foreach($subcategory as $Subcategory)
-                                                <td> {{$Subcategory->sub_category_name}} </td>
-                                            @endforeach
-                                            <td> {{$product->price}} </td>
-                                            <td class="btn-group">
-                                                <!-- Button trigger modal -->
-                                                <a href="" class="btn btn-primary" data-toggle="modal" data-target="#editproduct{{$product->id}}">
-                                                    Edit
-                                                </a>
-                                                <a href="{{route('delete.product',$product->id)}}" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
+                                    @foreach($orders as $order)
+                                    <tr id="category{{$order->id}}">
+                                        <td> #{{$order->id}} </td>
+                                        <td> {{$order->created_at->format('d.m.Y')}} </td>
+                                        @if($order->status==0)
+                                            <td> Pending</td>
+                                        @elseif($order->status==1)
+                                            <td> Accepted </td>
+                                        @elseif($order->status==2)
+                                            <td> Rejected</td>
+                                        @elseif($order->status==3)
+                                            <td> In Progress</td>
+                                        @else
+                                            <td> Delivered </td>
+                                        @endif
+                                        <td> {{$order->total_invoice}} </td>
+                                        <td> {{$order->username}} </td>
+                                        <td class="btn-group">
+                                            <!-- Button trigger modal -->
+                                            <a href="{{route('GetOrderId',$order->id)}}" class="btn btn-primary" data-toggle="modal" data-target="#editcategory{{$order->id}}">
+                                                Edit
+                                            </a>
+                                            <a href="{{route('delete.order',$order->id)}}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                 {{--   Start Edit modal--}}
-                                @foreach($all_products as $product)
-
-                                <div class="modal fade" id="editproduct{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            @foreach($orders as $order)
+                                            <div class="modal fade" id="editcategory{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Invoice</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form method="post" action="">
+                                                            <form method="post" action="{{route('update.order',$order->id)}}" >
                                                                 @csrf
                                                                 <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Product Title:</label>
-                                                                    <input type="text" class="form-control" name="product_title" value="{{$product->title}}" id="recipient-name">
+                                                                    <label for="recipient-name" class="col-form-label">Order ID:</label>
+                                                                    <input type="text" name="order_id" readonly class="form-control" id="recipient-name" value="{{$order->id}}">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Short Description:</label>
-                                                                    <textarea class="form-control" name="short_description" id="recipient-name">{{$product->short_description}}</textarea>
+                                                                    <label for="recipient-name" class="col-form-label">Order date:</label>
+                                                                    <input type="text" name="order_date" readonly class="form-control" id="recipient-name" value="{{$order->created_at->format('d.m.Y')}}">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Long Description:</label>
-                                                                    <textarea class="form-control" name="long_description" id="recipient-name">{{$product->long_description}} </textarea>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">Product Price:</label>
-                                                                    <input type="text" class="form-control" name="product_price" value="{{$product->price}}" id="recipient-name">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="recipient-name" class="col-form-label">the discount:</label>
-                                                                    <input type="text" class="form-control percent" name="product_discount" id="percent">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label>The Main Category</label>
-                                                                    <select name="main_category" class="js-example-basic-single w-100">
-                                                                        @foreach($All_Categories as $category)
-                                                                            <option value="{{$category->id}}">{{$category->category}}</option>
-                                                                        @endforeach
+                                                                    <label for="recipient-name" class="col-form-label">Order Status:</label>
+                                                                    <select name="order_status" class="js-example-basic-single w-100">
+                                                                        <option value="0" {{0 ==$order->status ? 'selected' : ''}}>Pending</option>
+                                                                        <option value="1"{{1 ==$order->status ? 'selected' : ''}}>Accepted</option>
+                                                                        <option value="2" {{2 ==$order->status ? 'selected' : ''}}>Rejected</option>
+                                                                        <option value="3" {{3 ==$order->status ? 'selected' : ''}}>In Progress</option>
+                                                                        <option value="4" {{4 ==$order->status ? 'selected' : ''}}>Delivered</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label>The Sub Category</label>
-                                                                    <select name="sub_category" class="js-example-basic-single w-100">
-                                                                        @foreach($all_subcategories as $subcategory)
-                                                                            <option value="{{$subcategory->id}}">{{$subcategory->sub_category_name}}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    <label for="recipient-name" class="col-form-label">Total Invoice:</label>
+                                                                    <input type="number" name="order_total"  class="form-control" id="recipient-name" value="{{$order->total_invoice}}">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <div class="field">
-                                                                        <label for="recipient-name" class="col-form-label">Images:</label>
-                                                                        <input type="file" class="form-control" name="product_images" id="recipient-name">
-                                                                    </div>
+                                                                    <label for="recipient-name" class="col-form-label">Items:</label>
+                                                                    <input type="number" name="order_items"  class="form-control" id="recipient-name" value="{{$order->items}}">
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -585,7 +437,7 @@
 
     </div>
 </div>
-<script src="https://transloadit.edgly.net/releases/uppy/v1.6.0/uppy.min.js"></script>
+
 <!-- core:js -->
 <script src="../../../assets/vendors/core/core.js"></script>
 <!-- endinject -->

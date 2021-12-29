@@ -9,6 +9,7 @@ use App\Http\Models\Comments;
 use App\Http\Models\contact_us;
 use App\Http\Models\orders;
 use App\Http\Models\products;
+use App\Http\Models\settings_website;
 use App\Http\Models\sub_categories;
 use App\Http\Models\user_login;
 use App\Traits\General_Traits;
@@ -102,7 +103,8 @@ class Website extends BaseController
         where('comments.rating', '>=', 2)->
         groupBy('comments.product_id')->get();
 
-        return view('Website.index', compact(['NewestProducts', 'popular_products', 'PopularCategories', 'Count_cart']));
+        $settings= settings_website::all();
+        return view('Website.index', compact(['NewestProducts','settings', 'popular_products', 'PopularCategories', 'Count_cart']));
     }
 
     public function Shop_View(Request $request)
@@ -128,8 +130,8 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
-
-            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.Shop', compact(['NewestProducts','settings', 'popular_products', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
@@ -151,8 +153,8 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
-
-            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.Shop', compact(['NewestProducts','settings', 'popular_products', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "product_oldest") {
 
@@ -174,8 +176,9 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
+            $settings= settings_website::all();
 
-            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            return view('Website.Shop', compact(['NewestProducts','settings', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -197,7 +200,9 @@ class Website extends BaseController
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
 
-            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+
+            return view('Website.Shop', compact(['settings','NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -219,8 +224,8 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
-
-            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.Shop', compact(['settings','NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -242,8 +247,8 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
-
-            return view('Website.Shop', compact(['NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.Shop', compact(['settings','NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } else {
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -264,11 +269,13 @@ class Website extends BaseController
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
 
+            $settings= settings_website::all();
+
             $categories = categories::select('id', 'category')->get();
             foreach ($categories as $singlecat) {
                 $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
             }
-            return view('Website.Shop', compact(['NewestProducts', 'Count_cart', 'count', 'popular_products', 'categories', 'sub']));
+            return view('Website.Shop', compact(['settings','NewestProducts', 'Count_cart', 'count', 'popular_products', 'categories', 'sub']));
         }
     }
 
@@ -287,7 +294,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
@@ -301,7 +309,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_oldest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -314,7 +323,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -327,7 +337,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -341,7 +352,9 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -355,7 +368,9 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } else {
             $count = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -371,7 +386,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'categories', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'categories', 'Count_cart']));
         }
     }
 
@@ -390,7 +406,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
@@ -404,7 +421,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_oldest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -417,7 +435,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -430,7 +449,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -444,7 +464,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -458,7 +479,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleCategory', compact(['NewestProducts', 'count', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
         } else {
             $count = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -474,7 +496,8 @@ class Website extends BaseController
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
-            return view('Website.SingleSubCategory', compact(['NewestProducts', 'count', 'categories', 'Count_cart']));
+            $settings= settings_website::all();
+            return view('Website.SingleSubCategory', compact(['settings','NewestProducts', 'count', 'categories', 'Count_cart']));
         }
     }
 
@@ -495,7 +518,10 @@ class Website extends BaseController
         join('products', 'products.id', '=', 'cart.product_id')->
         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
         where('user_login.id', '=', auth('user')->id())->count();
-        return view('Website.SingleProduct', compact(['NewestProducts', 'comments', 'RelatedProducts', 'Count_cart']));
+        $comments_count = Comments::join('user_login', 'user_login.id', '=', 'comments.user_id')->
+        where('comments.product_id', $id)->count();
+        $settings= settings_website::all();
+        return view('Website.SingleProduct', compact(['settings','NewestProducts','comments_count','comments', 'RelatedProducts', 'Count_cart']));
     }
 
     public function postcomments(Request $request)
@@ -542,30 +568,32 @@ class Website extends BaseController
         where('user_login.id', '=', auth('user')->id())->count();
         $total_price = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
         select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
-        return view('Website.Cart', compact(['Products_Cart', 'Count_cart', 'total_price']));
+        $settings= settings_website::all();
+        return view('Website.Cart', compact(['settings','Products_Cart', 'Count_cart', 'total_price']));
     }
 
-    public function AddItemToCard($product_id, $user_id=null, $total = null, $quantity = 1)
+    public function AddItemToCard($product_id, $user_id = null, $total = null, $quantity = 1)
     {
         try {
-            if($user_id==null){
-                return back()->with('error' ,'Please Login');
-            }else{
-                $rules=[
-                    $product_id=> 'unique:cart,product_id',
+            $token = auth('user')->id();
+            if ($token!=null) {
+                $rules = [
+                    $product_id => 'unique:cart,product_id',
                 ];
-                $validator= Validator::make(array($product_id),$rules);
-                if($validator->fails()){
-                    return back()->with('error' ,'this product is already in cart');
-                }else {
+                $validator = Validator::make(array($product_id), $rules);
+                if ($validator->fails()) {
+                    return back()->with('error', 'this product is already in cart');
+                } else {
                     Cart::create([
                         'product_id' => $product_id,
                         'user_id' => $user_id,
                         'quantity' => $quantity,
-                        'Sub_total'=>$total
+                        'Sub_total' => $total
                     ]);
                     return back()->with('success', "Added");
                 }
+            } else {
+                return back()->with('error', 'Please Login');
             }
         } catch (\Exception $ex) {
             return back()->with('error', $ex->getMessage());
@@ -603,6 +631,8 @@ class Website extends BaseController
         $count_checkout = billing_details::join('user_login', 'user_login.id', '=', 'billing_details.user_id')->
         where('billing_details.user_id', '=', auth('user')->id())->count();
 
+        $settings= settings_website::all();
+
         $total_price = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
         select('cart.Sub_total')->where('user_login.id', '=', auth('user')->id())->sum('cart.Sub_total');
         if (auth('user')->id()) {
@@ -610,7 +640,7 @@ class Website extends BaseController
                 return redirect('/Cart')->with('error', 'Please add one item at least to go to the checkout');
             } else {
 
-                return view('Website.CheckOut', compact(['Count_cart', 'total_price', 'count_checkout', 'Products_Cart', 'billing_details']));
+                return view('Website.CheckOut', compact(['settings','Count_cart', 'total_price', 'count_checkout', 'Products_Cart', 'billing_details']));
             }
         } else {
             return redirect('/Cart')->with('error', 'Please login to your account');
@@ -763,6 +793,8 @@ class Website extends BaseController
         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
         where('user_login.id', '=', auth('user')->id())->count();
 
+        $settings= settings_website::all();
+
         $orders = orders::join('user_login', 'user_login.id', '=', 'orders.user_id')->where('orders.user_id', '=', auth('user')->id())
             ->get(['orders.created_at', 'orders.id', 'orders.status', 'orders.total_invoice', 'orders.items']);
 
@@ -770,7 +802,7 @@ class Website extends BaseController
         where('billing_details.user_id', '=', auth('user')->id())->get();
 
 
-        return view('Website.Profile', compact('Count_cart', 'orders', 'account_info'));
+        return view('Website.Profile', compact('settings','Count_cart', 'orders', 'account_info'));
     }
 
     public function update_info(Request $request)
@@ -809,7 +841,8 @@ class Website extends BaseController
         join('products', 'products.id', '=', 'cart.product_id')->
         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
         where('user_login.id', '=', auth('user')->id())->count();
-        return view('Website.About_Us', compact(['Count_cart']));
+        $settings= settings_website::all();
+        return view('Website.About_Us', compact(['settings','Count_cart']));
     }
 
     public function contact_view()
@@ -818,7 +851,8 @@ class Website extends BaseController
         join('products', 'products.id', '=', 'cart.product_id')->
         join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
         where('user_login.id', '=', auth('user')->id())->count();
-        return view('Website.Contact_Us', compact(['Count_cart']));
+        $settings= settings_website::all();
+        return view('Website.Contact_Us', compact(['settings','Count_cart']));
     }
 
     public function send_mail(Request $request)

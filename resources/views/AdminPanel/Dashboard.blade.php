@@ -68,9 +68,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/apps/calendar.html" class="nav-link">
+                    <a href="{{route('manage.orders')}}" class="nav-link">
                         <i class="link-icon" data-feather="shopping-cart"></i>
-                        <span class="link-title">Sale Products</span>
+                        <span class="link-title">Manage Orders</span>
                     </a>
                 </li>
                 <li class="nav-item nav-category">Manage the website</li>

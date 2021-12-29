@@ -87,8 +87,12 @@
                                             </a>
                                         </div>
                                         <div class="info-box">
-                                            <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
-                                                <div class="content">
+                                            @if(auth('user')->id())
+                                                <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
+                                                    @else
+                                                        <a href="{{url('/userLogin')}}" class="cart">
+                                                            @endif
+                                                            <div class="content">
                                                     <i class='bx bx-shopping-bag'></i>
                                                 </div>
                                             </a>

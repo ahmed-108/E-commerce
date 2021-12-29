@@ -40,14 +40,16 @@
             <div class="row">
                 <div class="left col-lg-6 col-md-6 col-sm-6 col-12 text-lg-left text-md-left text-sm-left  text-center mb-lg-0 mb-md-0 mb-sm-0 mb-3">
                             <span>
-                                <a href="#">
-                                    <i class='bx bx-mobile'></i> (+01) - 2345 - 6789
+                                @foreach($settings as $info)
+                                <a href="tel:+20{{$info->phone}}">
+                                    <i class='bx bx-mobile'></i>+20{{$info->phone}}
                                 </a>
                             </span>
                     <span>
-                                <a href="#">
-                                    <i class='bx bx-location-plus'></i> Our location
+                                <a href="{{$info->address}}" target="_blank">
+                                    <i class='bx bx-location-plus'></i> Faculty of Computers and Information
                                 </a>
+                        @endforeach
                             </span>
                 </div>
                 @if (auth('user')->check())
@@ -82,7 +84,9 @@
             <div class="row align-items-center">
 
                 <div class="col-lg-3 col-md-3 col-sm-3 col-5 text-left">
+                    <a href="{{url('/')}}">
                     <img class="logo" src="{{ URL::asset('assets/images1/logo.svg') }}" alt="">
+                    </a>
                 </div>
 
                 <div class="col-6 search">
@@ -144,8 +148,10 @@
             </div>
 
             <div class="right">
+                @foreach($settings as $info)
                 <i class='bx bx-headphone' ></i>
-                Hotline <span>1900 - 888</span>
+                Hotline <span>{{$info->hotline}}</span>
+                @endforeach
             </div>
 
         </div>
@@ -213,43 +219,45 @@
                     <div class="contact">
                         <img class="logo" src="../../assets/images1/logo.svg" alt="">
                         <div class="subtitle">Contact</div>
+                        @foreach($settings as $info)
                         <div class="text">
-                            <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
+                            <strong>Address: </strong>Faculty of Computers and Information
                         </div>
                         <div class="text">
-                            <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
+                            <strong>Phone: </strong>+20{{$info->phone}}/{{$info->hotline}}
                         </div>
                         <div class="text">
-                            <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
+                            <strong>Hours: </strong>{{$info->hours}}
                         </div>
                         <div class="subtitle">Follow Us</div>
-                        <a href="#"><img src="../../assets/images1/Footer/icon-facebook.svg" alt=""></a>
-                        <a href="#"><img src="../../assets/images1/Footer/icon-instagram.svg" alt=""></a>
-                        <a href="#"><img src="../../assets/images1/Footer/icon-pinterest.svg" alt=""></a>
-                        <a href="#"><img src="../../assets/images1/Footer/icon-twitter.svg" alt=""></a>
-                        <a href="#"><img src="../../assets/images1/Footer/icon-youtube.svg" alt=""></a>
+                        <a href="{{$info->facebook}}"><img src="../../assets/images1/Footer/icon-facebook.svg" alt=""></a>
+                        <a href="{{$info->insta}}"><img src="../../assets/images1/Footer/icon-instagram.svg" alt=""></a>
+                        <a href="{{$info->pinterest}}"><img src="../../assets/images1/Footer/icon-pinterest.svg" alt=""></a>
+                        <a href="{{$info->twitter}}"><img src="../../assets/images1/Footer/icon-twitter.svg" alt=""></a>
+                        <a href="{{$info->youtube}}"><img src="../../assets/images1/Footer/icon-youtube.svg" alt=""></a>
                     </div>
+                    @endforeach
                 </div>
                 <div class="col-lg-2 col-md-3 col-12">
                     <div class="about">
                         <h4 class="title">About</h4>
-                        <a href="#">About Us</a>
+                        <a href="{{url('/aboutus')}}">About Us</a>
                         <a href="#">Delivery Information</a>
                         <a href="#">Privacy Policy</a>
                         <a href="#">Terms & Conditions</a>
-                        <a href="#">Contact Us</a>
+                        <a href="{{url('contactus')}}">Contact Us</a>
                         <a href="#">Support Center</a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-12">
                     <div class="account about">
                         <h4 class="title">My Account</h4>
-                        <a href="#">Sign In</a>
-                        <a href="#">View Cart</a>
+                        <a href="{{url('/userLogin')}}">Sign In</a>
+                        <a href="{{url('/Cart')}}">View Cart</a>
                         <a href="#">My Wishlist</a>
                         <a href="#">Track My Order</a>
                         <a href="#">Help</a>
-                        <a href="#">Order</a>
+                        <a href="{{url('Profile')}}">Order</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">

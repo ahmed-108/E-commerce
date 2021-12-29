@@ -138,8 +138,12 @@
                         </a>
                     </div>
                     <div class="info-box">
-                        <a href="{{route('Add.To.Cart',[$newproducts->id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
-                            <div class="content">
+                        @if(auth('user')->id())
+                            <a href="{{route('Add.To.Cart',[$newproducts->id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
+                                @else
+                                    <a href="{{url('/userLogin')}}" class="cart">
+                                        @endif
+                                        <div class="content">
                                 <i class='bx bx-shopping-bag'></i>
                             </div>
                         </a>
@@ -148,7 +152,7 @@
                             <span>-</span>
                             <a href="/Shop/Sub_Category/{{$newproducts->sub_category_name}}">{{$newproducts->sub_category_name}}</a>
                         </div>
-                        <a href="/Product/{{$newproducts->product_id}}/{{$newproducts->title}}" class="Name">{{$newproducts->title}}</a>
+                        <a href="/Product/{{$newproducts->id}}/{{$newproducts->title}}" class="Name">{{$newproducts->title}}</a>
                         <div class="rating">
                             <i class="far fa-star"></i>
                             <i class="far fa-star"></i>
@@ -187,7 +191,7 @@
                     <br>
                     Authorised Service Provider
                 </h1>
-                <a href="#">
+                <a href="{{url('/Shop')}}">
                     Shopping Now
                     <i class='bx bx-right-arrow-alt ml-2' ></i>
                 </a>
@@ -211,12 +215,12 @@
                 <div class="box">
 
                     <div class="image-box">
-                        <a href="#">
+                        <a href="/Shop/Category/{{$MostCategories->category}}">
                             <img src="{{$MostCategories->category_image}}" alt="">
                         </a>
                     </div>
                     <div class="name">
-                        <a href="#">{{$MostCategories->category}}</a>
+                        <a href="/Shop/Category/{{$MostCategories->category}}">{{$MostCategories->category}}</a>
                     </div>
                 </div>
             </div>
@@ -297,8 +301,12 @@
                         </a>
                     </div>
                     <div class="info-box">
-                        <a href="{{route('Add.To.Cart',[$product->product_id, auth('user')->id(),$product->price] ) }}" class="cart">
-                            <div class="content">
+                        @if(auth('user')->id())
+                            <a href="{{route('Add.To.Cart',[$product->product_id, auth('user')->id(),$product->price] ) }}" class="cart">
+                                @else
+                                    <a href="{{url('/userLogin')}}" class="cart">
+                                        @endif
+                                    <div class="content">
                                 <i class='bx bx-shopping-bag'></i>
                             </div>
                         </a>

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Models\categories;
+use App\Http\Models\contact_us;
 use App\Http\Models\images;
+use App\Http\Models\orders;
 use App\Http\Models\products;
+use App\Http\Models\settings_website;
 use App\Http\Models\sub_categories;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -194,12 +197,61 @@ class AdminController extends BaseController
         products::destroy($id);
         return redirect()->back()->with(['success'=>'The product has been deleted successfully']);
     }
+    ########################################### Manage orders ##########################################################
+    public function ManageOrders(){
+        $orders = orders::join('user_login', 'user_login.id', '=', 'orders.user_id')
+            ->get(['orders.created_at', 'orders.id', 'orders.status', 'orders.total_invoice', 'orders.items','user_login.username']);
+        return view('AdminPanel.Manage_orders',compact(['orders']));
+    }
+    public function GetOrderById($id){
+       $order=orders::find($id);
+    }
+    public function UpdateOrder(Request $request,$id){
 
+        $update=orders::find($id);
+        $update->status=$request->order_status;
+        $update->total_invoice=$request->order_total;
+        $update->items=$request->order_items;
+        $update->save();
+        return redirect()->back()->with(['success'=>'Changes Saved']);
+    }
+    public function Deleteorder($id){
+        orders::destroy($id);
+        return redirect()->back()->with(['success'=>'The order has been deleted successfully']);
+    }
+    ######################################### manage mails ##################################################
 
+    public function ManageMails(){
+        $emails = contact_us::all();
+        return view('AdminPanel.Manage_mails',compact(['emails']));
+    }
+    public function GetMailById($id){
+        $order=contact_us::find($id);
+    }
+    public function Deletemail($id){
+        contact_us::destroy($id);
+        return redirect()->back()->with(['success'=>'The mail has been deleted successfully']);
+    }
+    ############################## settings website ##############################################################
 
-
-
-
+    public function settings_view(){
+        $settings = settings_website::all();
+        return view('AdminPanel.Settings',compact(['settings']));
+    }
+    public function update_settings_website(Request $request){
+        $update_settings = settings_website::find(1);
+        $update_settings->phone= $request->phone;
+        $update_settings->hotline= $request->hotline;
+        $update_settings->address= $request->address;
+        $update_settings->hours= $request->hours;
+        $update_settings->facebook= $request->facebook;
+        $update_settings->insta= $request->insta;
+        $update_settings->pinterest= $request->pinterest;
+        $update_settings->twitter= $request->twitter;
+        $update_settings->youtube= $request->youtube;
+        $update_settings->save();
+        return back()->with('success','The settings has been updated');
+    }
 
 
 }

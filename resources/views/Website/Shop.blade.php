@@ -86,8 +86,12 @@
                                             </a>
                                         </div>
                                         <div class="info-box">
-                                            <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
-                                                <div class="content">
+                                            @if(auth('user')->id())
+                                                <a href="{{route('Add.To.Cart',[$newproducts->product_id, auth('user')->id(),$newproducts->price] ) }}" class="cart">
+                                                    @else
+                                                        <a href="{{url('/userLogin')}}" class="cart">
+                                                            @endif
+                                                            <div class="content">
                                                     <i class='bx bx-shopping-bag'></i>
                                                 </div>
                                             </a>
@@ -96,7 +100,7 @@
                                                 <span>-</span>
                                                 <a href="/Shop/Sub_Category/{{$newproducts->sub_category_name}}">{{$newproducts->sub_category_name}}</a>
                                             </div>
-                                            <a href="#" class="Name">{{$newproducts->title}}</a>
+                                            <a href="/Product/{{$newproducts->product_id}}/{{$newproducts->title}}" class="Name">{{$newproducts->title}}</a>
                                             <div class="rating">
                                                 <i class="far fa-star"></i>
                                                 <i class="far fa-star"></i>

@@ -51,6 +51,7 @@
                                  <a class="category" href="/Shop/Category/{{$product->category}}"> {{$product->category}}</a> -
                                 <a class="category" href="/Shop/Sub_Category/{{$product->sub_category_name}}"> {{$product->sub_category_name}}</a>
                             </div>
+                            @if($comments_count != 0)
                             <div class="right text-right ml-auto">
                                 <div class="rating">
                                     <i class="far fa-star"></i>
@@ -58,9 +59,10 @@
                                     <i class="far fa-star"></i>
                                     <i class="far fa-star"></i>
                                     <i class="far fa-star"></i>
-                                    <span>(25 reviews)</span>
+                                    <span>({{$comments_count}} reviews)</span>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <hr>
                         <div class="price pt-1 pb-1 d-flex align-items-center">
@@ -88,7 +90,11 @@
                             <button>XXL</button>
                         </div>
                         <div class="d-flex align-items-center mt-4 mb-5">
+                            @if(auth('user')->id()!=null)
                             <button type="submit" onclick="location.href='{{route('Add.To.Cart',[$product->product_id, auth('user')->id(),$product->price])}}';" class="add mr-2 ml-2">Add to Cart</button>
+                            @else
+                            <button onclick="location.href='{{url('/userLogin')}}'" class="add mr-2 ml-2" > Add to Cart</button>
+                            @endif
                         </div>
                         <hr>
                         <div class="stock mt-4">Availability: <span>8 Items In Stock</span></div>
@@ -127,7 +133,7 @@
 
             <!-- Start Reviews -->
             <div class="reviews content mb-5">
-                <div class="title">Reviews (3)</div>
+                <div class="title">Reviews ({{$comments_count}})</div>
                 <div class="row mt-3 mb-5">
 
                     <!-- Start Left Side -->
@@ -260,7 +266,11 @@
                         </a>
                     </div>
                     <div class="info-box">
-                        <a href="#" class="cart">
+                        @if(auth('user')->id())
+                            <a href="{{route('Add.To.Cart',[$product->product_id, auth('user')->id(),$product->price] ) }}" class="cart">
+                                @else
+                                    <a href="{{url('/userLogin')}}" class="cart">
+                                        @endif
                             <div class="content">
                                 <i class='bx bx-shopping-bag'></i>
                             </div>
@@ -272,7 +282,7 @@
                                 <a href="/Shop/Sub_Category/{{$product->sub_category_name}}">{{$product->sub_category_name}}</a>
                             </div>
                         </div>
-                        <a href="#" class="Name">{{$product->title}}</a>
+                        <a href="/Product/{{$product->product_id}}/{{$product->title}}" class="Name">{{$product->title}}</a>
                         <div class="rating">
                             <i class="far fa-star"></i>
                             <i class="far fa-star"></i>

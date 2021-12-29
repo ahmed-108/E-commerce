@@ -47,5 +47,18 @@ Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web'
 
     Route::post('/ManageProducts/Edit/{id}','AdminController@UpdateSubCategory')->name('update.subcategory');
     Route::get('/ManageProducts/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
+    ############################## manage orders ##############################################
+    Route::get("/ManageOrders","AdminController@ManageOrders")->name('manage.orders');
+
+    Route::get('/ManageOrders/edit/{id}','AdminController@GetOrderById')->name('GetOrderId');
+    Route::get('/ManageOrders/delete/{id}','AdminController@Deleteorder')->name('delete.order');
+    Route::post('/ManageOrders/Edit/{id}','AdminController@UpdateOrder')->name('update.order');
+    ################################### manage mails #######################################
+    Route::get("/ManageMails","AdminController@ManageMails")->name('manage.mails');
+    Route::get('/ManageMails/edit/{id}','AdminController@GetMailById')->name('GetMailId');
+    Route::get('/ManageMails/delete/{id}','AdminController@Deletemail')->name('delete.mail');
+    ################################# settings website ##################################
+    Route::get("/settings","AdminController@settings_view")->name('settings.view');
+    Route::post('/settings/edit','AdminController@update_settings_website')->name('update_settings_website');
 
 });

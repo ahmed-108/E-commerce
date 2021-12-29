@@ -83,13 +83,18 @@
                                     <tbody>
                                     @foreach($orders as $order)
                                     <tr>
-                                        <td>#{{$order->id}}</td>
-                                        <td>{{$order->created_at->format('d.m.Y')}}</td>
+                                        <td># {{$order->id}}</td>
+                                        <td> {{$order->created_at->format('d.m.Y')}}</td>
                                         @if($order->status==0)
-                                        <td>Pending</td>
-                                        @endif
-                                        @if($order->status==1)
-                                            <td>In Progress</td>
+                                            <td> Pending</td>
+                                        @elseif($order->status==1)
+                                            <td> Accepted </td>
+                                        @elseif($order->status==2)
+                                            <td> Rejected</td>
+                                        @elseif($order->status==3)
+                                            <td> In Progress</td>
+                                        @else
+                                            <td> Delivered </td>
                                         @endif
                                         <td>{{$order->total_invoice}} EPG</td>
                                         <td>{{$order->items}} item</td>
