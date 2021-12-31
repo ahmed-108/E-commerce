@@ -42,6 +42,10 @@ Route::group(['namespace'=>'Website','middleware'=>['auth.guard:user_api']], fun
     Route::post('/AddItemToCard','AuthLogin@AddItemToCard');
     Route::post('/GetCart','AuthLogin@GetCart');
     Route::post('/DeleteAccount','AuthLogin@DeleteAccount');
+    Route::post('/Get_Billing_details','AuthLogin@Get_Billing_details');
+    Route::post('/create_billing_details','AuthLogin@create_billing_details');
+    Route::post('/update_billing_details','AuthLogin@update_billing_details');
+    Route::post('/Create_order','AuthLogin@Create_order');
 
 
 });
