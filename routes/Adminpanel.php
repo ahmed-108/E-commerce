@@ -60,5 +60,12 @@ Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web'
     ################################# settings website ##################################
     Route::get("/settings","AdminController@settings_view")->name('settings.view');
     Route::post('/settings/edit','AdminController@update_settings_website')->name('update_settings_website');
+    ################################# manage users ##################
+    Route::get("/ManageUsers","AdminController@ManageUsers")->name('manage.users');
+    Route::post("/ManageUsers/add","AdminController@Add_user")->name('add.user');
+    Route::post('/ManageUsers/Edit/{id}','AdminController@UpdateUser')->name('update.user');
+
+    Route::get('ManageUsers/edit/{id}','AdminController@GetUserById')->name('GetUserId');
+    Route::get('/ManageUsers/delete/{id}','AdminController@Deleteuser')->name('delete.user');
 
 });

@@ -50,4 +50,9 @@ Route::get('/aboutus','Website\Website@about_view');
 Route::get('/contactus','Website\Website@contact_view');
 Route::post('/send_mail','Website\Website@send_mail')->name('send.email');
 
+##################
+Route::post('/Result','Website\Website@search_result')->name('search.result');
+Route::post('/update_account','Website\Website@update_account')->name('update_account');
+Route::get('/generate_pdf','Website\Website@generate_pdf')->name('generate_pdf');
+
 

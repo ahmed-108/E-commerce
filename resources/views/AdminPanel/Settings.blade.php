@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
+    <title>Website Settings | Evara-Shop</title>
     <!-- core:css -->
     <link rel="stylesheet" href="../../../assets/vendors/core/core.css">
     <!-- endinject -->
@@ -18,7 +18,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../../assets/css/demo_1/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images1/icon.png">
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
@@ -26,7 +26,7 @@
     <nav class="sidebar">
         <div class="sidebar-header">
             <a href="#" class="sidebar-brand">
-                Noble<span>UI</span>
+                Evara<span>Shop</span>
             </a>
             <div class="sidebar-toggler not-active">
                 <span></span>
@@ -75,22 +75,26 @@
                 </li>
                 <li class="nav-item nav-category">Manage the website</li>
                 <li class="nav-item">
-                    <a href="{{route('manage.mails')}}" class="nav-link ">
-                        <i class="link-icon" data-feather="shopping-cart"></i>
+                    <a href="{{route('manage.mails')}}" class="nav-link">
+                        <i class="link-icon" data-feather="mail"></i>
                         <span class="link-title">Manage Mails</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('settings.view')}}" class="nav-link active">
-                        <i class="link-icon" data-feather="shopping-cart"></i>
-                        <span class="link-title">Manage The Website</span>
+                    <a href="{{route('settings.view')}}" class="nav-link">
+                        <i class="link-icon" data-feather="settings"></i>
+                        <span class="link-title">Manage Website Settings</span>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="{{route('manage.users')}}" class="nav-link">
+                        <i class="link-icon" data-feather="settings"></i>
+                        <span class="link-title">Manage users</span>
+                    </a>
+                </li>
             </ul>
         </div>
-    </nav>
-    <!-- partial -->
+    </nav>    <!-- partial -->
     <div class="page-wrapper">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar">
@@ -109,32 +113,14 @@
                                     <img src="https://via.placeholder.com/80x80" alt="">
                                 </div>
                                 <div class="info text-center">
-                                    <p class="name font-weight-bold mb-0">Amiah Burton</p>
-                                    <p class="email text-muted mb-3">amiahburton@gmail.com</p>
+                                    <p class="name font-weight-bold mb-0">{{auth('web')->user()->name}}</p>
+                                    <p class="email text-muted mb-3">{{auth('web')->user()->email}}</p>
                                 </div>
                             </div>
                             <div class="dropdown-body">
                                 <ul class="profile-nav p-0 pt-3">
                                     <li class="nav-item">
-                                        <a href="pages/general/profile.html" class="nav-link">
-                                            <i data-feather="user"></i>
-                                            <span>Profile</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:;" class="nav-link">
-                                            <i data-feather="edit"></i>
-                                            <span>Edit Profile</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:;" class="nav-link">
-                                            <i data-feather="repeat"></i>
-                                            <span>Switch User</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:;" class="nav-link">
+                                        <a href="{{url('admin/logout')}}" class="nav-link">
                                             <i data-feather="log-out"></i>
                                             <span>Log Out</span>
                                         </a>
@@ -145,8 +131,7 @@
                     </li>
                 </ul>
             </div>
-        </nav>
-        <!-- partial -->
+        </nav>        <!-- partial -->
         <div class="page-content">
             <div class="row">
 
@@ -208,7 +193,7 @@
         </div>
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between">
-            <p class="text-muted text-center text-md-left">Copyright © 2020 <a href="https://www.nobleui.com" target="_blank">NobleUI</a>. All rights reserved</p>
+            <p class="text-muted text-center text-md-left">Copyright © 2022 <a href="{{url('/')}}" target="_blank">Evara-Shop</a>. All rights reserved</p>
             <p class="text-muted text-center text-md-left mb-0 d-none d-md-block">Handcrafted With <i class="mb-1 text-primary ml-1 icon-small" data-feather="heart"></i></p>
         </footer>
         <!-- partial -->

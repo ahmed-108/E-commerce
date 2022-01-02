@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
+    <title>Evara-Shop Panel</title>
     <!-- core:css -->
     <link rel="stylesheet" href="../../../assets/vendors/core/core.css">
     <!-- endinject -->
@@ -17,7 +17,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../../assets/css/demo_1/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images1/icon.png">
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="col-md-8 pl-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
-                                <a href="#" class="noble-ui-logo d-block mb-2">E-<span>Commerce</span></a>
+                                <a href="#" class="noble-ui-logo d-block mb-2">Evara-<span>Shop</span></a>
                                 <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
                                 <form class="forms-sample" method="post" action="{{ route('login') }}">
                                     @csrf

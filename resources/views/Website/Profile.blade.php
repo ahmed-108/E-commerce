@@ -53,7 +53,7 @@
                     <div class="dashboard page active">
                         <div class="image-box mb-4">
                             <img src="../../assets/images1/profile.png" alt="">
-                            <span class="ml-3">Hello Roise!</span>
+                            <span class="ml-3">Hello {{auth('user')->user()->username}}!</span>
                         </div>
                         <div class="info">
                             <p>From your account dashboard. you can easily view your <span>orders</span></p>
@@ -102,63 +102,90 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                <button type="submit" onclick="location.href='{{url('/generate_pdf')}}' " class="button">
+                                    PDF
+                                </button>
                             </div>
                         </div>
                     </div>
                     <!-- End Orders -->
 
                     <!-- Start details -->
-                    <div class="details page">
-                        <div class="card">
-                            <div class="card-header">
-                                Account Details
-                            </div>
-                            <div class="card-body">
-                                <form method="post" action="{{route('update_info')}}">
-                                    @csrf
-                                  @foreach($account_info as $info)
-                                    <div class="form-group">
-                                        <img src="../../assets/images1/form/name.png" alt="">
-                                        <input type="text" name="full_name" class="form-control" value="{{$info->full_name}}" placeholder="Full Name *" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <img src="../../assets/images1/form/phone.png" alt="">
-                                        <input type="number" name="phone1" class="form-control" value="{{$info->phone1}}" placeholder="Your Phone (1) *" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <img src="../../assets/images1/form/phone.png" alt="">
-                                        <input type="number" name="phone2" class="form-control" value= "{{$info->phone2}}" placeholder="Your Phone (2)">
-                                    </div>
-                                    <div class="row pl-0 pr-0">
-                                        <div class="col-md-6 pl-0 pr-lg-2 pr-md-2 pr-sm-0 pr-0">
+                        <div class="details page">
+                            <div class="card">
+                                <div class="card-header">
+                                    Billing Details
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" action="{{route('update_info')}}">
+                                        @csrf
+                                        @foreach($account_info as $info)
                                             <div class="form-group">
-                                                <img src="../../assets/images1/form/country.png" alt="">
-                                                <input type="text" name="country" class="form-control" value="{{$info->country}}" placeholder="Your Country *" required>
+                                                <img src="../../assets/images1/form/name.png" alt="">
+                                                <input type="text" name="full_name" class="form-control" value="{{$info->full_name}}" placeholder="Full Name *" required>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 pr-0 pl-lg-2 pl-md-2 pl-sm-0 pl-0">
                                             <div class="form-group">
-                                                <img src="../../assets/images1/form/city.png" alt="">
-                                                <input type="text" name="city" class="form-control" value="{{$info->city}}" placeholder="Your City *" required>
+                                                <img src="../../assets/images1/form/phone.png" alt="">
+                                                <input type="number" name="phone1" class="form-control" value="{{$info->phone1}}" placeholder="Your Phone (1) *" required>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <img src="../../assets/images1/form/code-zip.png" alt="">
-                                        <input type="text" name="zip_code" class="form-control" value="{{$info->zip_code}}" placeholder="Postcode / Zip *" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <img src="../../assets/images1/form/address.png" alt="">
-                                        <input type="text" name="full_address" class="form-control" value="{{$info->full_address}}" placeholder="Your Address *" required>
-                                    </div>
+                                            <div class="form-group">
+                                                <img src="../../assets/images1/form/phone.png" alt="">
+                                                <input type="number" name="phone2" class="form-control" value= "{{$info->phone2}}" placeholder="Your Phone (2)">
+                                            </div>
+                                            <div class="row pl-0 pr-0">
+                                                <div class="col-md-6 pl-0 pr-lg-2 pr-md-2 pr-sm-0 pr-0">
+                                                    <div class="form-group">
+                                                        <img src="../../assets/images1/form/country.png" alt="">
+                                                        <input type="text" name="country" class="form-control" value="{{$info->country}}" placeholder="Your Country *" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 pr-0 pl-lg-2 pl-md-2 pl-sm-0 pl-0">
+                                                    <div class="form-group">
+                                                        <img src="../../assets/images1/form/city.png" alt="">
+                                                        <input type="text" name="city" class="form-control" value="{{$info->city}}" placeholder="Your City *" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <img src="../../assets/images1/form/code-zip.png" alt="">
+                                                <input type="text" name="zip_code" class="form-control" value="{{$info->zip_code}}" placeholder="Postcode / Zip *" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <img src="../../assets/images1/form/address.png" alt="">
+                                                <input type="text" name="full_address" class="form-control" value="{{$info->full_address}}" placeholder="Your Address *" required>
+                                            </div>
 
-                                    <button type="submit" class="submit">Save</button>
-                                    @endforeach
-                                </form>
+                                            <button type="submit" class="submit">Save</button>
+                                        @endforeach
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Account Details
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" action="{{route('update_account')}}">
+                                        @csrf
+                                            <div class="form-group">
+                                                <img src="../../assets/images1/form/name.png" alt="">
+                                                <input type="text" name="username" class="form-control" value="{{auth('user')->user()->username}}" placeholder="Full Name *" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <img src="../../assets/images1/form/phone.png" alt="">
+                                                <input type="email" name="email" class="form-control" value="{{auth('user')->user()->email}}" placeholder="Your Phone (1) *" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <img src="../../assets/images1/form/phone.png" alt="">
+                                                <input type="password" name="password" class="form-control" value= "" placeholder="Your password">
+                                            </div>
+                                            <button type="submit" class="submit">Save</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- End details -->
+                     <!-- End details -->
+
 
                 </div>
             </div>

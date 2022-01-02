@@ -90,10 +90,17 @@
                 </div>
 
                 <div class="col-6 search">
-                    <form action="">
+                    <form action="{{route('search.result')}}" method="post">
+                        @csrf
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search ...">
-                            <i class='bx bx-search-alt'></i>
+                            <input type="text" class="form-control" name="search" placeholder="Search ...">
+                            <i class='bx bx-search-alt'>
+                            </i>
+                            <button hidden type="submit" >
+                                <i class='bx bx-search-alt'>
+                                </i>
+                            </button>
+
                         </div>
                     </form>
                 </div>

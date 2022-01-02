@@ -31,6 +31,8 @@ Route::group(['namespace'=>'Website'],function(){
     Route::post("GetResultSearch","API@GetResultSearch")->name("get_subcategoryByID");
     Route::post("getmoetcatgeory","API@getmoetcatgeory")->name("getmoetcatgeory");
     Route::post("GetCategoriesandSub","API@GetCategoriesandSub")->name("getmoetcatgeory");
+    Route::post("GtSubcategoriesById","API@GtSubcategoriesByCategoryID")->name("getmoetcatgeory");
+
 
 });
 
@@ -46,6 +48,7 @@ Route::group(['namespace'=>'Website','middleware'=>['auth.guard:user_api']], fun
     Route::post('/create_billing_details','AuthLogin@create_billing_details');
     Route::post('/update_billing_details','AuthLogin@update_billing_details');
     Route::post('/Create_order','AuthLogin@Create_order');
+    Route::post('/Delete_item','AuthLogin@Delete_item');
 
 
 });

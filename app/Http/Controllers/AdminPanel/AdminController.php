@@ -9,10 +9,12 @@ use App\Http\Models\orders;
 use App\Http\Models\products;
 use App\Http\Models\settings_website;
 use App\Http\Models\sub_categories;
+use App\Http\Models\user_login;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +26,14 @@ class AdminController extends BaseController
     }
 
     public function dashboard(){
-        return view('AdminPanel.Dashboard');
+        $count_users=user_login::all()->count();
+
+        $count_products= products::all()->count();
+
+        $count_orders= orders::all()->count();
+
+        $count_pending_orders= orders::all()->where('status','=',0)->count();
+        return view('AdminPanel.Dashboard',compact(['count_orders','count_users','count_pending_orders','count_products']));
     }
     ##########################################  Main Categories ########################################################
     public function MainCategory(){
@@ -153,7 +162,7 @@ class AdminController extends BaseController
             'price'=>$old_price,
             'category_id'=>$request->main_category,
             'sub_category_id'=>$request->sub_category,
-            'old_price'=>$new_price,
+            'old_price'=>$request->product_price,
             'discount'=>$request->product_discount
         ]);
         if($request->hasFile('product_images')) {
@@ -252,6 +261,46 @@ class AdminController extends BaseController
         $update_settings->save();
         return back()->with('success','The settings has been updated');
     }
+######################################## manage users #####################################
+    public function ManageUsers(){
+        $allusers= user_login::all();
+        return view('AdminPanel.Manage_users',compact('allusers'));
+    }
+    public function Add_user(Request $request){
+        $rules = [
+            'username' => 'required',
+            'email' => 'required|email|unique:user_login',
+            'password' => 'required'
+        ];
+        $validator= Validator::make($request->all(),$rules);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator);
+        }
+        user_login::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+            return 'The user has been added successfully';
+        }
 
+    public function GetUserById($id){
+        $allusers= user_login::find($id);
+    }
+    public function UpdateUser(Request $request,$id){
+
+
+            $update=user_login::find($id);
+            $update->username = $request->username;
+        $update->email = $request->email;
+        $update->password = $request->password;
+
+        $update->save();
+            return redirect()->back()->with('success','The user has been updated successfully');
+    }
+    public function Deleteuser($id){
+        user_login::destroy($id);
+        return redirect()->back()->with(['success'=>'The user has been deleted successfully']);
+    }
 
 }

@@ -13,6 +13,7 @@ use App\Http\Models\settings_website;
 use App\Http\Models\sub_categories;
 use App\Http\Models\user_login;
 use App\Traits\General_Traits;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use http\Env\Url;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -117,10 +118,12 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             orderBy('products.price', 'asc')->
             paginate(15);
+
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
+
             $count = products::all()->count();
 
             $popular_products = Comments::
@@ -130,8 +133,14 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
+
             $settings= settings_website::all();
-            return view('Website.Shop', compact(['NewestProducts','settings', 'popular_products', 'count', 'Count_cart']));
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.Shop', compact(['NewestProducts','categories','settings', 'popular_products', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
@@ -154,7 +163,13 @@ class Website extends BaseController
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
             $settings= settings_website::all();
-            return view('Website.Shop', compact(['NewestProducts','settings', 'popular_products', 'count', 'Count_cart']));
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Shop', compact(['NewestProducts','categories','settings', 'popular_products', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "product_oldest") {
 
@@ -178,7 +193,12 @@ class Website extends BaseController
             groupBy('comments.product_id')->get();
             $settings= settings_website::all();
 
-            return view('Website.Shop', compact(['NewestProducts','settings', 'popular_products', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Shop', compact(['NewestProducts','categories','settings', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
@@ -202,7 +222,12 @@ class Website extends BaseController
 
             $settings= settings_website::all();
 
-            return view('Website.Shop', compact(['settings','NewestProducts', 'popular_products', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Shop', compact(['settings','categories','NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -225,7 +250,13 @@ class Website extends BaseController
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
             $settings= settings_website::all();
-            return view('Website.Shop', compact(['settings','NewestProducts', 'popular_products', 'count', 'Count_cart']));
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Shop', compact(['settings','categories','NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -248,7 +279,12 @@ class Website extends BaseController
             where('comments.rating', '>=', 2)->
             groupBy('comments.product_id')->get();
             $settings= settings_website::all();
-            return view('Website.Shop', compact(['settings','NewestProducts', 'popular_products', 'count', 'Count_cart']));
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.Shop', compact(['settings','categories','NewestProducts', 'popular_products', 'count', 'Count_cart']));
         } else {
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -287,7 +323,7 @@ class Website extends BaseController
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            orderBy('products.price', 'asc')->
+            orderBy('products.price', 'asc')->where('categories.category', $category)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -295,14 +331,19 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            orderBy('products.price', 'desc')->
+            orderBy('products.price', 'desc')->where('categories.category', $category)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -310,13 +351,18 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_oldest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            orderBy('products.created_at', 'asc')->
+            orderBy('products.created_at', 'asc')->where('categories.category', $category)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -324,13 +370,18 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            orderBy('products.created_at', 'desc')->
+            orderBy('products.created_at', 'desc')->where('categories.category', $category)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -338,7 +389,12 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -346,15 +402,21 @@ class Website extends BaseController
             join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            where('comments.rating', '<=', 2)->groupBy('comments.product_id')->paginate(15);
+            where('comments.rating', '<=', 2)->
+            where('categories.category', $category)->
+            groupBy('comments.product_id')->paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
 
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -362,20 +424,27 @@ class Website extends BaseController
             join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            where('comments.rating', '>=', 2)->groupBy('comments.product_id')->paginate(15);
+            where('comments.rating', '>=', 2)->
+            where('categories.category', $category)->
+            groupBy('comments.product_id')->paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
 
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
         } else {
             $count = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('categories.category', $category)->count();
+
             $categories = categories::all();
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -387,7 +456,12 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'categories', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'categories', 'Count_cart']));
         }
     }
 
@@ -399,7 +473,7 @@ class Website extends BaseController
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            orderBy('products.price', 'asc')->
+            orderBy('products.price', 'asc')->where('sub-category.sub_category_name', $sub_category_name)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -407,14 +481,19 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['settings','categories','NewestProducts', 'count', 'Count_cart']));
 
         } elseif ($request->get('sort') == "price_desc") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            orderBy('products.price', 'desc')->
+            orderBy('products.price', 'desc')->where('sub-category.sub_category_name', $sub_category_name)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -422,13 +501,18 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.SingleCategory', compact(['categories','settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_oldest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             orderBy('products.created_at', 'asc')->
+            where('sub-category.sub_category_name', $sub_category_name)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -436,13 +520,18 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.SingleCategory', compact(['categories','settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "product_newest") {
 
             $NewestProducts = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             orderBy('products.created_at', 'desc')->
+            where('sub-category.sub_category_name', $sub_category_name)->
             paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
@@ -450,7 +539,11 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.SingleCategory', compact(['categories','settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "lowest_rating") {
 
             $NewestProducts = Comments::
@@ -458,14 +551,21 @@ class Website extends BaseController
             join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            where('comments.rating', '<=', 2)->groupBy('comments.product_id')->paginate(15);
+            where('comments.rating', '<=', 2)->
+            where('sub-category.sub_category_name', $sub_category_name)->
+            groupBy('comments.product_id')->paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['categories','settings','NewestProducts', 'count', 'Count_cart']));
         } elseif ($request->get('sort') == "highest_rating") {
 
             $NewestProducts = Comments::
@@ -473,14 +573,21 @@ class Website extends BaseController
             join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
-            where('comments.rating', '>=', 2)->groupBy('comments.product_id')->paginate(15);
+            where('comments.rating', '>=', 2)->groupBy('comments.product_id')->
+            where('sub-category.sub_category_name', $sub_category_name)->
+            paginate(15);
             $count = products::all()->count();
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
             join('products', 'products.id', '=', 'cart.product_id')->
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleCategory', compact(['settings','NewestProducts', 'count', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleCategory', compact(['categories','settings','NewestProducts', 'count', 'Count_cart']));
         } else {
             $count = products::join('categories', 'categories.id', '=', 'products.category_id')->
             join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
@@ -497,7 +604,12 @@ class Website extends BaseController
             join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
             where('user_login.id', '=', auth('user')->id())->count();
             $settings= settings_website::all();
-            return view('Website.SingleSubCategory', compact(['settings','NewestProducts', 'count', 'categories', 'Count_cart']));
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.SingleSubCategory', compact(['categories','settings','NewestProducts', 'count', 'categories', 'Count_cart']));
         }
     }
 
@@ -882,5 +994,258 @@ class Website extends BaseController
         } catch (\Exception $ex) {
             return back()->with('error', $ex->getMessage());
         }
+    }
+    ####################
+
+    public function search_result(Request $request)
+    {
+
+        if ($request->get('sort') == "price_asc") {
+
+            $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->orderBy('products.price', 'asc')->
+            paginate(15);
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.Search_result', compact(['NewestProducts','categories','settings', 'popular_products', 'count', 'Count_cart']));
+
+        } elseif ($request->get('sort') == "price_desc") {
+
+            $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->
+            orderBy('products.price', 'desc')->
+            paginate(15);
+
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Search_result', compact(['NewestProducts','categories','settings', 'popular_products', 'count', 'Count_cart']));
+
+        } elseif ($request->get('sort') == "product_oldest") {
+
+            $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->
+            orderBy('products.created_at', 'asc')->
+            paginate(15);
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Search_result', compact(['NewestProducts','categories','settings', 'popular_products', 'count', 'Count_cart']));
+        } elseif ($request->get('sort') == "product_newest") {
+
+            $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->
+            orderBy('products.created_at', 'desc')->
+            paginate(15);
+
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Search_result', compact(['settings','categories','NewestProducts', 'popular_products', 'count', 'Count_cart']));
+        } elseif ($request->get('sort') == "lowest_rating") {
+
+            $NewestProducts = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '<=', 2)->where('products.title','LIKE','%'.$request->search.'%')->groupBy('comments.product_id')->paginate(15);
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+
+            return view('Website.Search_result', compact(['settings','categories','NewestProducts', 'popular_products', 'count', 'Count_cart']));
+        } elseif ($request->get('sort') == "highest_rating") {
+
+            $NewestProducts = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->where('products.title','LIKE','%'.$request->search.'%')->groupBy('comments.product_id')->paginate(15);
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.Search_result', compact(['settings','categories','NewestProducts', 'popular_products', 'count', 'Count_cart']));
+        } else {
+            $NewestProducts= products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->
+            orderBy('products.created_at', 'desc')->
+            paginate(15);
+            $count =products::join('categories','categories.id','=','products.category_id')->
+            join('sub-category','sub-category.id','=','products.sub_category_id')->
+            join('product_images','product_images.id','=','products.product_imagesID')->
+            where('products.title','LIKE','%'.$request->search.'%')->count();
+
+            $categories = categories::all();
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user')->id())->count();
+            $popular_products = Comments::
+            join('products', 'products.id', '=', 'comments.product_id')->
+            join('categories', 'categories.id', '=', 'products.category_id')->
+            join('sub-category', 'sub-category.id', '=', 'products.sub_category_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('comments.rating', '>=', 2)->
+            groupBy('comments.product_id')->get();
+
+            $settings= settings_website::all();
+
+            $categories = categories::select('id', 'category')->get();
+            foreach ($categories as $singlecat) {
+                $sub[$singlecat->category] = sub_categories::where('category_id', $singlecat->id)->get();
+            }
+            return view('Website.Search_result', compact(['settings','NewestProducts', 'Count_cart', 'count', 'popular_products', 'categories', 'sub']));
+        }
+    }
+
+    public function update_account(Request $request){
+       $update_account= user_login::find(auth('user')->id());
+       $update_account->username= $request->username;
+       $update_account->email= Hash::make($request->password);
+       $update_account->save();
+       return back()->with('success','The info of your account has been updated');
+    }
+    public function generate_pdf(){
+        $orders = orders::join('user_login', 'user_login.id', '=', 'orders.user_id')->where('orders.user_id', '=', auth('user')->id())
+            ->get(['orders.created_at', 'orders.id', 'orders.status', 'orders.total_invoice', 'orders.items']);
+        $pdf = PDF::loadView('Website.generate_pdf', compact('orders'));
+        return $pdf->download('invoices.pdf');
     }
 }

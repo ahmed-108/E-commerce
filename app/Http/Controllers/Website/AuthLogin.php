@@ -155,10 +155,24 @@ class AuthLogin extends BaseController
 
     public function GetCart()
     {
-        $data = Cart::join('products', 'products.id', '=', 'cart.product_id')->
-        join('user_login', 'user_login.id', '=', 'cart.user_id')->get();
-        return $this->returnData("the cart", $data);
+        if (auth('user_api')->id() != null) {
+            $data = Cart::join('products', 'products.id', '=', 'cart.product_id')->
+            join('user_login', 'user_login.id', '=', 'cart.user_id')->get();
 
+            $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            join('products', 'products.id', '=', 'cart.product_id')->
+            join('product_images', 'product_images.id', '=', 'products.product_imagesID')->
+            where('user_login.id', '=', auth('user_api')->id())->count();
+            if($Count_cart==0){
+
+                return $this->returnError('E4324', 'Please add one product at least');
+
+            }else{
+            return $this->returnData("the cart", $data);
+            }
+        }else{
+            return  $this->returnError('E3232', 'Please login to your account');
+        }
     }
 
     public function DeleteAccount()
@@ -283,4 +297,20 @@ class AuthLogin extends BaseController
             return $this->returnError('E3423', 'Please login to your account');
         }
     }
+    public function Delete_item(Request $request)
+    {
+        if (auth('user_api')->id() != null) {
+            $find_id = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            where('cart.user_id', '=', auth('user_api')->id())->exists();
+            if($find_id==1){
+                Cart::destroy($request->cart_id);
+                return $this->returnSuccessMessage('The item has been deleted');
+            }else{
+                return  $this->returnError('E432', 'The ID of the cart not exists');
+            }
+        } else {
+            return $this->returnError('E3423', 'Please login to your account');
+        }
+    }
+
 }

@@ -56,7 +56,8 @@ use General_Traits;
      join('product_images','product_images.id','=','products.product_imagesID')->
      orderBy('products.created_at','desc')->take(8)->
      get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
-         'products.short_description','product_images.path']);
+         'products.short_description','product_images.path','products.old_price',
+            'products.discount']);
          return $this->returnData("Newest Products", $NewestProducts);
     }
 
@@ -67,7 +68,8 @@ use General_Traits;
         join('product_images','product_images.id','=','products.product_imagesID')->
         where('products.id',$request->id)->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.short_description','products.long_description',
-            'products.price','product_images.path']);
+            'products.price','product_images.path','products.old_price',
+            'products.discount']);
         $comments= Comments::join('user_login','user_login.id','=','comments.user_id')->
         where('comments.product_id',$request->id)->get(['comments.id','user_login.username','comments.comment','comments.rating']);
         $data=[
@@ -91,8 +93,18 @@ use General_Traits;
        join('sub-category','sub-category.id','=','products.sub_category_id')->
        join('product_images','product_images.id','=','products.product_imagesID')->
        where('sub_category_id',$request->id)->
-       get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.short_description','products.long_description',
-           'products.price','product_images.path']);
+       get([
+           'products.id',
+           'categories.category',
+           'sub-category.sub_category_name',
+           'products.title',
+           'products.short_description',
+           'products.long_description',
+           'products.price',
+           'product_images.path',
+           'products.old_price',
+           'products.discount'
+       ]);
        if(!$request->id) {
            return $this->returnError("5005", "Please Enter The category ID");
        }else {
@@ -109,8 +121,17 @@ use General_Traits;
         join('sub-category','sub-category.id','=','products.sub_category_id')->
         join('product_images','product_images.id','=','products.product_imagesID')->
         where('products.category_id',$request->id)->
-        get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.short_description','products.long_description',
-            'products.price','product_images.path']);
+        get(['products.id',
+            'categories.category',
+            'sub-category.sub_category_name',
+            'products.title',
+            'products.short_description',
+            'products.long_description',
+            'products.price',
+            'product_images.path',
+            'products.old_price',
+            'products.discount'
+        ]);
         if(!$request->id) {
             return $this->returnError("5005", "Please Enter The category ID");
         }else {
@@ -131,7 +152,8 @@ use General_Traits;
         where('comments.rating','>=',2)->
         groupBy('comments.product_id')->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
-            'products.short_description','product_images.path','comments.rating']);
+            'products.short_description','product_images.path','comments.rating','products.old_price',
+            'products.discount']);
         return $this->returnData("done", $NewestProducts);
     }
 
@@ -141,7 +163,8 @@ use General_Traits;
         join('product_images','product_images.id','=','products.product_imagesID')->
         orderBy('products.created_at','asc')->take(8)->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
-            'products.short_description','product_images.path']);
+            'products.short_description','product_images.path','products.old_price',
+            'products.discount']);
         return $this->returnData("Oldest Products", $NewestProducts);
     }
     public function GetHighestPrices(){
@@ -151,7 +174,8 @@ use General_Traits;
         join('product_images','product_images.id','=','products.product_imagesID')->
         orderBy('products.price','desc')->take(8)->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
-            'products.short_description','product_images.path']);
+            'products.short_description','product_images.path','products.old_price',
+            'products.discount']);
         return $this->returnData("Highest Prices", $NewestProducts);
     }
 
@@ -161,7 +185,8 @@ use General_Traits;
         join('product_images','product_images.id','=','products.product_imagesID')->
         orderBy('products.price','asc')->take(8)->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
-            'products.short_description','product_images.path']);
+            'products.short_description','product_images.path','products.old_price',
+            'products.discount']);
         return $this->returnData("Lowest Prices", $NewestProducts);
     }
 
@@ -171,7 +196,8 @@ use General_Traits;
         join('product_images','product_images.id','=','products.product_imagesID')->
         where('products.title','LIKE','%'.$request->search.'%')->
         get(['products.id','categories.category','sub-category.sub_category_name','products.title','products.price',
-            'products.short_description','product_images.path']);
+            'products.short_description','product_images.path','products.old_price',
+            'products.discount']);
 
         return $this->returnData("Search Result", $ResultSearch);
     }
@@ -193,6 +219,12 @@ use General_Traits;
 
             return $this->returnData('data', $subcategory);
         }
+    }
+
+    public function GtSubcategoriesByCategoryID(Request $request){
+        $sub_category_By_Id= sub_categories::join('categories','categories.id','=','sub-category.category_id')->
+            where('sub-category.category_id','=',$request->id)->get();
+        return $this->returnData('products', $sub_category_By_Id);
     }
 
 
