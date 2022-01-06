@@ -49,6 +49,7 @@ Route::group(['namespace'=>'Website','middleware'=>['auth.guard:user_api']], fun
     Route::post('/update_billing_details','AuthLogin@update_billing_details');
     Route::post('/Create_order','AuthLogin@Create_order');
     Route::post('/Delete_item','AuthLogin@Delete_item');
+    Route::post('/update_account','AuthLogin@update_account');
 
 
 });

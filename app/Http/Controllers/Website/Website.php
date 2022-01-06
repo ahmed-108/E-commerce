@@ -105,6 +105,9 @@ class Website extends BaseController
         groupBy('comments.product_id')->get();
 
         $settings= settings_website::all();
+
+
+
         return view('Website.index', compact(['NewestProducts','settings', 'popular_products', 'PopularCategories', 'Count_cart']));
     }
 
@@ -686,15 +689,16 @@ class Website extends BaseController
 
     public function AddItemToCard($product_id, $user_id = null, $total = null, $quantity = 1)
     {
+
         try {
             $token = auth('user')->id();
+            $check_productID= Cart::join('user_login','user_login.id','=','cart.user_id')->
+                join('products', 'products.id', '=', 'cart.product_id')->
+                where('user_login.id','=',auth('user')->id())->where('cart.product_id','=',$product_id)->exists();
+
             if ($token!=null) {
-                $rules = [
-                    $product_id => 'unique:cart,product_id',
-                ];
-                $validator = Validator::make(array($product_id), $rules);
-                if ($validator->fails()) {
-                    return back()->with('error', 'this product is already in cart');
+                if($check_productID==1){
+                    return back()->with('error', 'This product is already exists in the your cart');
                 } else {
                     Cart::create([
                         'product_id' => $product_id,
@@ -1238,7 +1242,8 @@ class Website extends BaseController
     public function update_account(Request $request){
        $update_account= user_login::find(auth('user')->id());
        $update_account->username= $request->username;
-       $update_account->email= Hash::make($request->password);
+       $update_account->email=$request->email;
+       $update_account->password= Hash::make($request->password);
        $update_account->save();
        return back()->with('success','The info of your account has been updated');
     }

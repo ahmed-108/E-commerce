@@ -19,6 +19,10 @@
                         Orders
                     </li>
                     <li class="details">
+                        <i class='bx bxl-paypal mr-2'></i>
+                        Billing Details
+                    </li>
+                    <li class="account-details">
                         <i class='bx bx-user mr-2'></i>
                         Account Details
                     </li>
@@ -160,6 +164,12 @@
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                     <!-- End details -->
+
+
+                        <!-- Start account-details -->
+                        <div class="account-details page">
                             <div class="card">
                                 <div class="card-header">
                                     Account Details
@@ -167,25 +177,24 @@
                                 <div class="card-body">
                                     <form method="post" action="{{route('update_account')}}">
                                         @csrf
-                                            <div class="form-group">
-                                                <img src="../../assets/images1/form/name.png" alt="">
-                                                <input type="text" name="username" class="form-control" value="{{auth('user')->user()->username}}" placeholder="Full Name *" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <img src="../../assets/images1/form/phone.png" alt="">
-                                                <input type="email" name="email" class="form-control" value="{{auth('user')->user()->email}}" placeholder="Your Phone (1) *" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <img src="../../assets/images1/form/phone.png" alt="">
-                                                <input type="password" name="password" class="form-control" value= "" placeholder="Your password">
-                                            </div>
-                                            <button type="submit" class="submit">Save</button>
+                                        <div class="form-group">
+                                            <img src="../../assets/images1/form/name.png" alt="">
+                                            <input type="text" name="username" class="form-control" value="{{auth('user')->user()->username}}" placeholder="Full Name *" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <img src="../../assets/images1/form/phone.png" alt="">
+                                            <input type="email" name="email" class="form-control" value="{{auth('user')->user()->email}}" placeholder="Your Phone (1) *" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <img src="../../assets/images1/form/phone.png" alt="">
+                                            <input type="password" name="password" class="form-control" value= "" placeholder="Your password">
+                                        </div>
+                                        <button type="submit" class="submit">Save</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                     <!-- End details -->
-
+                        <!-- End account-details -->
 
                 </div>
             </div>

@@ -106,10 +106,6 @@
                 </div>
 
                 <div class="col-lg-3 col-md3 col-sm-3 col-7 text-right right">
-                    <a href="#">
-                        <i class='bx bx-heart'></i>
-                        <div class="number">4</div>
-                    </a>
                     <a href="{{url('/Cart')}}">
                         <i class='bx bx-shopping-bag' ></i>
                         <div class="number">{{$Count_cart}}</div>

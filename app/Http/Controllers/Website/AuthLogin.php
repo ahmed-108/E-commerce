@@ -127,14 +127,11 @@ class AuthLogin extends BaseController
         try {
 
             if (auth('user_api')->id() != null) {
-                $rules = [
-                    'product_id' => 'unique:cart,product_id',
-                    'price' => 'required',
-                    'quantity' => 'required',
-                ];
-                $validator = Validator::make($request->all(), $rules);
-                if ($validator->fails()) {
-                    return $this->returnError("4003", "Please ensure enter the data");
+                $check_productID= Cart::join('user_login','user_login.id','=','cart.user_id')->
+                join('products', 'products.id', '=', 'cart.product_id')->
+                where('user_login.id','=',auth('user')->id())->where('cart.product_id','=',$request->product_id)->exists();
+                if ($check_productID==1) {
+                    return $this->returnError("4003", "This product is already exists in the your cart");
                 }
                 Cart::create([
                     'product_id' => $request->product_id,
@@ -157,7 +154,9 @@ class AuthLogin extends BaseController
     {
         if (auth('user_api')->id() != null) {
             $data = Cart::join('products', 'products.id', '=', 'cart.product_id')->
-            join('user_login', 'user_login.id', '=', 'cart.user_id')->get();
+            join('user_login', 'user_login.id', '=', 'cart.user_id')->
+            get(['cart.id','products.title','products.price'
+                ,'products.short_description']);
 
             $Count_cart = Cart::join('user_login', 'user_login.id', '=', 'cart.user_id')->
             join('products', 'products.id', '=', 'cart.product_id')->
@@ -312,5 +311,15 @@ class AuthLogin extends BaseController
             return $this->returnError('E3423', 'Please login to your account');
         }
     }
+
+    public function update_account(Request $request){
+        $update_account= user_login::find(auth('user_api')->id());
+        $update_account->username= $request->username;
+        $update_account->email=$request->email;
+        $update_account->password= Hash::make($request->password);
+        $update_account->save();
+        return $this->returnSuccessMessage('The info of your account has been updated');
+    }
+
 
 }
