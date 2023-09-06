@@ -18,8 +18,8 @@ class CreateProductImagesTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('product_id')->index('product_id');
 			$table->string('path', 1000);
-			$table->timestamps(10);
-		});
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				});
 	}
 
 

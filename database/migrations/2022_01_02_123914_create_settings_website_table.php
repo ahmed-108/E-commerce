@@ -25,7 +25,9 @@ class CreateSettingsWebsiteTable extends Migration {
 			$table->string('pinterest', 1000);
 			$table->string('twitter', 1000);
 			$table->string('youtube', 1000);
-			$table->timestamps(10);
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				
+	
 		});
 	}
 

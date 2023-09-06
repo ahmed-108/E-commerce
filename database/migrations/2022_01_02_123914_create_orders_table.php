@@ -21,8 +21,8 @@ class CreateOrdersTable extends Migration {
 			$table->integer('billing_details_ID')->index('billing_details_id');
 			$table->integer('status')->nullable();
 			$table->integer('items');
-			$table->timestamps(10);
-		});
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				});
 	}
 
 

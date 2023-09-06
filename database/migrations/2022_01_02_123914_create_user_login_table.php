@@ -19,8 +19,8 @@ class CreateUserLoginTable extends Migration {
 			$table->string('username', 1000);
 			$table->string('email', 1000);
 			$table->string('password', 1000);
-			$table->timestamps(10);
-		});
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				});
 	}
 
 

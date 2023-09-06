@@ -53,7 +53,7 @@
                     <div class="collapse" id="emails">
                         <ul class="nav sub-menu">
                             <li class="nav-item">
-                                <a href="{{route('MainCategory')}}" class="nav-link">The Main Categories</a>
+                                <a href="{{route('MainCategory.index')}}" class="nav-link">The Main Categories</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{route('SubCategory')}}" class="nav-link">The Sub-Categories</a>

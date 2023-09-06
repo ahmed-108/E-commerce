@@ -18,7 +18,8 @@ class CreateCategoriesTable extends Migration {
 			$table->integer('id', true);
 			$table->string('category', 1000);
 			$table->string('category_image', 1000)->nullable();
-			$table->timestamps(10);
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();		
 		});
 	}
 

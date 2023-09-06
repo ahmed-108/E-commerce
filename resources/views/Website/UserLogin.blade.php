@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Vendor Css Files -->
-    <link rel="stylesheet" href= "{{ URL::asset('assets/vendor1/bootstrap/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/fontawesome/all.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href= "{{ URL::asset('../../../assets/vendor1/bootstrap/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('../../../assets/vendor1/fontawesome/all.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('../../../assets/vendor1/boxicons/css/boxicons.min.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('../../../assets/images1/icon.png') }}">
 
     <!-- Main Css File -->
-    <link rel="stylesheet" href="{{ URL::asset('assets/css1/style.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('assets/css1/login-register.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('../../../assets/css1/style.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('../../../assets/css1/login-register.css') }}">
 
     <title>Evara - Login</title>
 
@@ -91,11 +91,11 @@
 
 <!-- --------------------------------------------------------------------------- -->
 <!-- Vendor Js Files -->
-<script src="{{ URL::asset('assets/vendor1/particles.js') }}"></script>
-<script src="{{ URL::asset('assets/vendor1/jquery/jquery.min.js') }}"></script>
-<script src="{{ URL::asset('assets/vendor1/bootstrap/popper.min.js') }}"></script>
-<script src="{{ URL::asset('assets/vendor1/bootstrap/bootstrap.js') }}"></script>
-<script src="{{ URL::asset('assets/vendor1/fontawesome/all.min.js') }}"></script>
+<script src="{{ URL::asset('../../../assets/vendor1/particles.js') }}"></script>
+<script src="{{ URL::asset('../../../assets/vendor1/jquery/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('../../../assets/vendor1/bootstrap/popper.min.js') }}"></script>
+<script src="{{ URL::asset('../../../assets/vendor1/bootstrap/bootstrap.js') }}"></script>
+<script src="{{ URL::asset('../../../assets/vendor1/fontawesome/all.min.js') }}"></script>
 
 <!-- Main Js Files -->
 <script src="{{ URL::asset('assets/js1/main.js') }}"></script>

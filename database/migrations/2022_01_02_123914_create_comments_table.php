@@ -20,8 +20,8 @@ class CreateCommentsTable extends Migration {
 			$table->integer('rating')->nullable();
 			$table->integer('user_id')->index('userID_ibfk_1');
 			$table->integer('product_id')->index('product_ibfk_2');
-			$table->timestamps(10);
-		});
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				});
 	}
 
 

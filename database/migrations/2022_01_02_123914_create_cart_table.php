@@ -20,7 +20,8 @@ class CreateCartTable extends Migration {
 			$table->integer('user_id')->index('user_ibfk_2');
 			$table->integer('quantity');
 			$table->integer('Sub_total')->nullable();
-			$table->timestamps(10);
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();		
 		});
 	}
 

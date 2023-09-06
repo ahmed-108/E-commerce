@@ -108,7 +108,7 @@ class Website extends BaseController
 
 
 
-        return view('Website.index', compact(['NewestProducts','settings', 'popular_products', 'PopularCategories', 'Count_cart']));
+        return view('Website.Index', compact(['NewestProducts','settings', 'popular_products', 'PopularCategories', 'Count_cart']));
     }
 
     public function Shop_View(Request $request)

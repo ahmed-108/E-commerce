@@ -26,7 +26,8 @@ class CreateBillingDetailsTable extends Migration {
 			$table->string('full_address', 1000);
 			$table->text('notes');
 			$table->string('payment_method');
-			$table->timestamps(10);
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();
 		});
 	}
 

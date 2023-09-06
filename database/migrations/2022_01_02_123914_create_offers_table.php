@@ -19,6 +19,8 @@ class CreateOffersTable extends Migration {
 			$table->string('image_path', 1000);
 			$table->string('description', 1000);
 			$table->string('link', 10000);
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();		
 		});
 	}
 

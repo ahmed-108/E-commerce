@@ -25,7 +25,8 @@ class CreateProductsTable extends Migration {
 			$table->integer('product_imagesID')->nullable()->index('product_imagesID');
 			$table->integer('old_price')->nullable();
 			$table->integer('discount')->nullable();
-			$table->timestamps(10);
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();					
 			$table->index(['sub_category_id','category_id'], 'sub_category_id');
 		});
 	}

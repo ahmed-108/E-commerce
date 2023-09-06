@@ -18,8 +18,8 @@ class CreateSubCategoryTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('category_id')->index('category_id');
 			$table->string('sub_category_name', 1000);
-			$table->timestamps(10);
-		});
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				});
 	}
 
 

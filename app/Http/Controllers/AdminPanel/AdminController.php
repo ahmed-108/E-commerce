@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use App\Http\Models\categories;
-use App\Http\Models\contact_us;
-use App\Http\Models\images;
-use App\Http\Models\orders;
-use App\Http\Models\products;
-use App\Http\Models\settings_website;
-use App\Http\Models\sub_categories;
-use App\Http\Models\user_login;
+use App\Models\categories;
+use App\Models\contact_us;
+use App\Models\images;
+use App\Models\orders;
+use App\Models\products;
+use App\Models\settings_website;
+use App\Models\sub_categories;
+use App\Models\user_login;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -41,6 +41,7 @@ class AdminController extends BaseController
         return view('AdminPanel.MainCategories',compact('All_Categories'));
     }
     public function Add_MainCategory(Request $request){
+
        $rules=[
            'main_category'=> 'required',
        ];
@@ -72,27 +73,27 @@ class AdminController extends BaseController
     public function GetCategoryById($category){
         $categories= categories::find($category);
     }
-    public function UpdateCategory(Request $request,$category){
+    // public function UpdateCategory(Request $request,$category){
 
-        if($request->hasFile('category_image')) {
-            $images = $request->file('category_image');
-            $file_extension = $request->category_image->getClientOriginalExtension();
-            $img_name = time() . '.' . $file_extension;
-            $path = 'public/images/categories';
-            $request->category_image->move($path, $img_name);
-            $file ='/'.$path . '/' . $img_name;
-            $update=categories::find($category);
-            $update->category = $request->main_category;
-            $update->category_image=$file;
-            $update->save();
-            return redirect()->back()->with('success','The Category has been updated successfully');
-        }else{
-            $update=categories::find($category);
-            $update->category = $request->main_category;
-            $update->save();
-            return redirect()->back()->with('success','The Category has been updated successfully');
-        }
-    }
+    //     if($request->hasFile('category_image')) {
+    //         $images = $request->file('category_image');
+    //         $file_extension = $request->category_image->getClientOriginalExtension();
+    //         $img_name = time() . '.' . $file_extension;
+    //         $path = 'public/images/categories';
+    //         $request->category_image->move($path, $img_name);
+    //         $file ='/'.$path . '/' . $img_name;
+    //         $update=categories::find($category);
+    //         $update->category = $request->main_category;
+    //         $update->category_image=$file;
+    //         $update->save();
+    //         return redirect()->back()->with('success','The Category has been updated successfully');
+    //     }else{
+    //         $update=categories::find($category);
+    //         $update->category = $request->main_category;
+    //         $update->save();
+    //         return redirect()->back()->with('success','The Category has been updated successfully');
+    //     }
+    // }
     public function DeleteCategory($id){
         categories::destroy($id);
         return redirect()->back()->with(['success'=>'The Category has been deleted successfully']);

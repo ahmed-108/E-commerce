@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Vendor Css Files -->
-    <link rel="stylesheet" href="../../assets/vendor1/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="../../assets/vendor1/fontawesome/all.css">
-    <link rel="stylesheet" href="../../assets/vendor1/boxicons/css/boxicons.min.css">
-    <link rel="stylesheet" href="../../assets/vendor1/owl.carousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../assets/vendor1/slick/slick.css">
-    <link rel="stylesheet" href="../../assets/vendor1/ion.rangeSlider-master/css/ion.rangeSlider.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images1/icon.png">
-    <link rel="stylesheet" href="../../assets/vendor1/swiper/swiper.min.css">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/bootstrap/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/fontawesome/all.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/owl.carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/slick/slick.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/ion.rangeSlider-master/css/ion.rangeSlider.min.css') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('assets/images1/icon.png') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/vendor1/swiper/swiper.min.css') }}">
 
     <!-- Main Css File -->
-    <link rel="stylesheet" href="../../assets/css1/style.css">
-    <link rel="stylesheet" href="../../assets/css1/shop.css">
-    <link rel="stylesheet" href="../../assets/css1/single-product.css">
+    <link rel="stylesheet" href="{{ URL::asset('assets/css1/style.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/css1/shop.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/css1/single-product.css') }}">
     <link rel="stylesheet" href="../../assets/css1/cart.css">
     <link rel="stylesheet" href="../../assets/css1/checkout.css">
     <link rel="stylesheet" href="../../assets/css1/about.css">
@@ -336,16 +336,16 @@
 
 <!-- --------------------------------------------------------------------------- -->
 <!-- Vendor Js Files -->
-<script src="../../assets/vendor1/jquery/jquery.min.js"></script>
-<script src="../../assets/vendor1/bootstrap/popper.min.js"></script>
-<script src="../../assets/vendor1/bootstrap/bootstrap.js"></script>
-<script src="../../assets/vendor1/owl.carousel/owl.carousel.min.js"></script>
-<script src="../../assets/vendor1/fontawesome/all.min.js"></script>
-<script src="../../assets/vendor1/slick/slick.min.js"></script>
-<script src="../../assets/vendor1/swiper/swiper.min.js"></script>
-<script src="../../assets/vendor1/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
+<script src="{{ URL::asset('assets/vendor1/jquery/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/bootstrap/popper.min.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/bootstrap/bootstrap.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/owl.carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/fontawesome/all.min.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/slick/slick.min.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/swiper/swiper.min.js') }}"></script>
+<script src="{{ URL::asset('assets/vendor1/ion.rangeSlider-master/js/ion.rangeSlider.min.js') }}"></script>
 
 <!-- Main Js Files -->
-<script src="../../assets/js1/main.js"></script>
+<script src="{{ URL::asset('assets/js1/main.js') }}"></script>
 </body>
 </html>

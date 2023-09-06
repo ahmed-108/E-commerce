@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,12 +25,10 @@ Route::get('admin/logout', '\App\Http\Controllers\Auth\LoginController@logout')-
 Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web']],function(){
     #######################################  The Routes of Views #######################################################
     Route::get("/Dashboard","AdminController@dashboard")->name('dashboard');
-    Route::get("/MainCategory","AdminController@MainCategory")->name('MainCategory');
-    Route::post("/MainCategory/add","AdminController@Add_MainCategory")->name('add.maincategory');
-    Route::post('/MainCategory/Edit/{id}','AdminController@UpdateCategory')->name('update.maincategory');
-
-    Route::get('MainCategory/edit/{category}','AdminController@GetCategoryById')->name('GetId');
-    Route::get('/MainCategory/delete/{id}','AdminController@DeleteCategory')->name('delete.category');
+    
+    Route::resource("/MainCategory",CategoriesController::class, [
+        'except' => ['create', 'show','edit']
+    ]);
 
     #######################################  The Routes of Views #######################################################
 

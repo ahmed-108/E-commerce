@@ -21,8 +21,8 @@ class CreateContactUsTable extends Migration {
 			$table->integer('phone');
 			$table->string('subject', 10000);
 			$table->string('message', 1000);
-			$table->timestamps(10);
-		});
+			$table->dateTime('created_at')->nullable();
+			$table->dateTime('updated_at')->nullable();				});
 	}
 
 
