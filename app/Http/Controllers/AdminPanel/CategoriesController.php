@@ -74,7 +74,7 @@ class CategoriesController extends Controller
             session()->flash('error', "Category not found.");
         }
     
-        return redirect()->back();
+        return redirect()->route('MainCategory.index');
     }
 
     /**

@@ -25,20 +25,24 @@ Route::get('admin/logout', '\App\Http\Controllers\Auth\LoginController@logout')-
 Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web']],function(){
     #######################################  The Routes of Views #######################################################
     Route::get("/Dashboard","AdminController@dashboard")->name('dashboard');
-    
+
     Route::resource("/MainCategory",CategoriesController::class, [
         'except' => ['create', 'show','edit']
     ]);
 
     #######################################  The Routes of Views #######################################################
 
-    Route::get("/SubCategory","AdminController@SubCategory")->name('SubCategory');
-    Route::post("/SubCategory/add","AdminController@Add_SubCategory")->name('add.subncategory');
+    // Route::get("/SubCategory","AdminController@SubCategory")->name('SubCategory');
+    // Route::post("/SubCategory/add","AdminController@Add_SubCategory")->name('add.subncategory');
 
-    Route::post('/SubCategory/Edit/{id}','AdminController@UpdateSubCategory')->name('update.subcategory');
+    // Route::post('/SubCategory/Edit/{id}','AdminController@UpdateSubCategory')->name('update.subcategory');
 
-    Route::get('/SubCategory/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
-    Route::get('/SubCategory/delete/{id}','AdminController@DeleteSubCategory')->name('delete.subcategory');
+    // Route::get('/SubCategory/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
+    // Route::get('/SubCategory/delete/{id}','AdminController@DeleteSubCategory')->name('delete.subcategory');
+
+    Route::resource("/SubCategory",SubCategoriesController::class, [
+        'except' => ['create', 'show','edit']
+    ]);
     #######################################  The Routes of Views #######################################################
     Route::get("/ManageProducts","AdminController@ManageProducts")->name('ManageProducts');
     Route::post("/ManageProducts/add","AdminController@Add_Product")->name('add.products');

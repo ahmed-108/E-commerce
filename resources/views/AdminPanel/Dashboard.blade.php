@@ -56,7 +56,7 @@
                                 <a href="{{route('MainCategory.index')}}" class="nav-link">The Main Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('SubCategory')}}" class="nav-link">The Sub-Categories</a>
+                                <a href="{{route('SubCategory.index')}}" class="nav-link">The Sub-Categories</a>
                             </li>
                         </ul>
                     </div>
