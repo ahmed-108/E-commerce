@@ -11,7 +11,7 @@ class images extends Model
     protected $hidden=['id','created_at','updated_at'];
 
     public function products(){
-        return $this->belongsTo('App\Models\products');
+        return $this->belongsTo(Products::class,'product_id','id');
     }
 
 }

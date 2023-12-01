@@ -19,7 +19,7 @@ class CategoriesService {
             $imagePath = $request->file('category_image')->store('images/categories', 'public');
             $categoryData['category_image'] = $imagePath;
         }
-
+        
         return categories::create($categoryData);
     }
  

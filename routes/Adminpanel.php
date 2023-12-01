@@ -44,12 +44,15 @@ Route::group(['prefix'=>'admin','namespace'=>'AdminPanel','middleware' => ['web'
         'except' => ['create', 'show','edit']
     ]);
     #######################################  The Routes of Views #######################################################
-    Route::get("/ManageProducts","AdminController@ManageProducts")->name('ManageProducts');
-    Route::post("/ManageProducts/add","AdminController@Add_Product")->name('add.products');
-    Route::get('/ManageProducts/delete/{id}','AdminController@DeleteProduct')->name('delete.product');
+    // Route::get("/ManageProducts","AdminController@ManageProducts")->name('ManageProducts');
+    // Route::post("/ManageProducts/add","AdminController@Add_Product")->name('add.products');
+    // Route::get('/ManageProducts/delete/{id}','AdminController@DeleteProduct')->name('delete.product');
 
-    Route::post('/ManageProducts/Edit/{id}','AdminController@UpdateSubCategory')->name('update.subcategory');
-    Route::get('/ManageProducts/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
+    // Route::post('/ManageProducts/Edit/{id}','AdminController@UpdateSubCategory')->name('update.subcategory');
+    // Route::get('/ManageProducts/edit/{id}','AdminController@GetSubCategoryById')->name('GetId');
+    Route::resource("/ManageProducts",ProductsController::class, [
+        'except' => ['create', 'show','edit']
+    ]);
     ############################## manage orders ##############################################
     Route::get("/ManageOrders","AdminController@ManageOrders")->name('manage.orders');
 

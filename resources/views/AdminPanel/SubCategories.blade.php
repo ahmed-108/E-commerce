@@ -70,9 +70,9 @@
                                         <td>{{$SubCategories['SubCategory']}}</td>
                                         <td class="btn-group">
                                             <!-- Button trigger modal -->
-                                            <a href="{{route('GetId',$SubCategories['id'])}}" class="btn btn-primary" data-toggle="modal" data-target="#editsubcategory{{$SubCategories['id']}}">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#editsubcategory{{$SubCategories['id']}}">
                                                 Edit
-                                            </a>
+                                            </button>
                                             <form method="POST" action="{{ route('SubCategory.destroy', $SubCategories['id']) }}">
                                                 @csrf
                                                 @method('DELETE') <!-- Specify the HTTP method here -->

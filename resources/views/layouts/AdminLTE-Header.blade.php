@@ -17,9 +17,38 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="../../../assets/css/demo_1/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- End layout styles -->
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images1/icon.png">
 </head>
+<style>
+    .image-preview {
+        display: inline-block;
+        position: relative;
+        margin: 5px;
+    }
+
+    .image-preview img {
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+        object-fit: cover;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .delete-icon {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        color: #fff;
+        background-color: red;
+        border-radius: 50%;
+        padding: 5px;
+        font-size: 12px;
+    }
+</style>
+
 <body class="sidebar-dark">
 <div class="main-wrapper">
     <!-- partial:partials/_sidebar.html -->
@@ -62,7 +91,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('ManageProducts')}}" class="nav-link">
+                    <a href="{{route('ManageProducts.index')}}" class="nav-link">
                         <i class="link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">Manage The Products</span>
                     </a>
